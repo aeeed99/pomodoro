@@ -1,0 +1,71 @@
+@import "../design";
+
+navbar {
+
+  display: block;
+  background: $c-MainDark;
+  color: white;
+  box-shadow: 1px 1px 14px -3px black;
+
+  .container {
+    width: 91%;
+    height: 54px;
+    max-width: 1340px;
+  }
+
+  fullstack-logo {
+    margin-top: 5px;
+    margin-right: 20px;
+    width: 40px;
+  }
+
+  a {
+    color: black;
+    font-size: 16px;
+  }
+
+  .nav > li > a {
+    cursor: pointer;
+    transition: color 0.2s;
+    color: white;
+    margin: 0 8px;
+    &.active {
+      font-weight: bold;
+      border-bottom: 2px solid white;
+      height: 46px;
+    }
+    &:hover {
+      background: none;
+      height: 46px;
+      border-bottom: 2px solid white;
+    }
+    &:focus {
+      background: none;
+    }
+  }
+
+  .login-button {
+    float: right;
+    border: 1px solid black;
+    margin-top: 10px;
+    background: $c-accent;
+    box-shadow: 1px 1px 14px -3px black;
+    color: black;
+    outline: none !important;
+  }
+
+  .welcome {
+    float: right;
+    margin-top: 12px;
+    span {
+      color: black;
+      font-size: 16px;
+      margin-right: 5px;
+    }
+    a {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+}
