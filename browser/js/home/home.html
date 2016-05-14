@@ -1,4 +1,18 @@
 <section id="home">
-    <fullstack-logo></fullstack-logo>
-    <rando-greeting></rando-greeting>
+  <div class="tom-status-bar">
+    <div ng-repeat="tomato in tomatoMeter" ng-class="tomato.class" class="tom-icon badge">
+      <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
+      <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+    </div>
+  </div>
+  <div class="tom-screen">
+    <div class="big-tom-timer">
+      <span>{{time}}</span>
+    </div>
+  </div>
+  <button type="button" class="btn" ng-click="startTimer()">Start Pomodoro!</button>
+  <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
+  <button type="button" class="btn" ng-click="_markBreakStart()">Start Break</button>
+  <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
+  <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
 </section>

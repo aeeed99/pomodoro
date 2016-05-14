@@ -8,5 +8,44 @@
     margin-top: 40px;
     text-align: center;
   }
+  .tom-status-bar {
+    background: $c-greenFade;
+    padding: 4px 5px;
+    margin: 0 16px;
+    border-radius: 16px;
+    display: inline-block;
+    width: auto;
+    min-width: 200px;
+  }
+  .tom-icon {
+    font-size: 13px;
+    height: 18px;
+    margin: 0 2px;
+    &.complete {
+      background: red;
+      &.break {
+        background: darkgoldenrod;
+      }
+    }
+    &.fail {
+      background: darkolivegreen;
+    }
+  }
+  .big-tom-timer {
+    height: 300px;
+    width: 320px;
+    margin: 16px auto;
+    border-radius: 140px;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $c-MainDark;
+    span {
+      color: white;
+      font-size: 52px;
+      font-weight: bold;
+    }
+  }
 }
 
