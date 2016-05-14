@@ -6,8 +6,8 @@
     </div>
   </div>
   <div class="tom-screen">
-    <div class="big-tom-timer">
-      <span>{{time}}</span>
+    <div class="big-tom-timer" ng-class="{'break-timer' : onBreak }">
+      <span ng-class="">{{time}}</span>
     </div>
   </div>
   <button type="button" class="btn" ng-click="startTimer()">Start Pomodoro!</button>
@@ -15,4 +15,12 @@
   <button type="button" class="btn" ng-click="_markBreakStart()">Start Break</button>
   <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
   <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
+  <div class="side-panel">
+    <div class="section">
+      <div class="title">Tomatoes eaten</div>
+      <div>Today: {{getCompleted()}}</div>
+      <div>Total: {{getTotal()}}</div>
+    </div>
+
+  </div>
 </section>

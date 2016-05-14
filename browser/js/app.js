@@ -1,4 +1,7 @@
 'use strict';
+
+Notification.requestPermission();
+
 window.app = angular.module('FullstackGeneratedApp', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'ngAnimate']);
 
 app.config(function ($urlRouterProvider, $locationProvider) {

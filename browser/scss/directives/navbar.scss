@@ -45,12 +45,13 @@ navbar {
   }
 
   .login-button {
+    @include shadow(3);
     float: right;
-    border: 1px solid black;
+    border: 0px solid black;
     margin-top: 10px;
     background: $c-accent;
-    box-shadow: 1px 1px 14px -3px black;
-    color: black;
+    font-weight: bold;
+    color: white;
     outline: none !important;
   }
 
