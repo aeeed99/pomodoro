@@ -35,7 +35,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
       console.log("aue")
     };
     let completeFn = function () {
-      new Notification("Pomodoro complete", { body: "Take a 5 minute break or select other options"});
+      new Notification("Pomodoro complete", { body: "Take a 5 minute break or select other options", icon: "/public/tomato.png"});
     };
     timer = new Timer([0,3], completeFn, intervalFn);
     document.title = "[" + ($scope.time = "25:00") + "] «  eating a tomato";
