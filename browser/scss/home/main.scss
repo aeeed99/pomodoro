@@ -54,10 +54,11 @@
     border-radius: 140px;
     display: -webkit-flex;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: $c-MainDark;
-    span {
+    span, div {
       color: white;
       font-size: 52px;
       font-weight: bold;
@@ -88,6 +89,31 @@
       -webkit-animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
       -o-animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
       animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
+    }
+
+    .tom-ctrl {
+      display: -webkit-flex;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      opacity: .0;
+
+      -webkit-transition: opacity 400ms ease;
+      -moz-transition: opacity 400ms ease;
+      -ms-transition: opacity 400ms ease;
+      -o-transition: opacity 400ms ease;
+      transition: opacity 400ms ease;
+
+      &:hover {
+        opacity: .5;
+      }
+      i {
+        font-size: 32px;
+        margin: 0 4px;
+        color: #0f0f0f;
+        cursor: pointer;
+      }
     }
   }
 }

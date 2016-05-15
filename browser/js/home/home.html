@@ -6,12 +6,24 @@
     </div>
   </div>
   <div class="tom-screen">
-    <div class="big-tom-timer" ng-class="{'break-timer' : onBreak }">
-      <span ng-class="">{{time}}</span>
+    <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
+      <div class="goal">&nbsp;</div>
+      <div ng-class="{'finish': state.timerPaused}">{{time}}</div>
+      <div class="tom-ctrl">
+        <div ng-show="state.timerRunning">
+          <span ng-click="togglePause()">
+            <i class="fa fa-pause" ng-show="!state.timerPaused"></i>
+            <i class="fa fa-play" ng-show="state.timerPaused"></i>
+          </span>
+          <span class="reset">
+            <i class="fa fa-refresh"></i>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="button-panel">
-    <button type="button" class="btn primary" ng-click="startTimer()">POMODORO (25m)</button>
+    <button type="button" class="btn primary" ng-click="startTimer()" ng-disabled="state.timerRunning">POMODORO (25m)</button>
     <button type="button" class="btn default" ng-click="_markBreakStart()">BREAK (5m)</button>
     <button type="button" class="btn default" ng-click="_markBreakStart()">REST (15m)</button>
   </div>

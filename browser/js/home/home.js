@@ -10,7 +10,12 @@ app.controller('HomeCtrl', function ($scope, Store) {
 
   let completed = 0;
   let activeIdx = 0;
-  $scope.onBreak = false;
+  $scope.state = {
+    timerRunning: false,
+    timerPaused: false,
+    onBreak: false
+  }
+  let state = $scope.state; // for better readability.
   var timer;
 
   $scope.getCompleted = () => completed;
@@ -18,7 +23,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
 
 
   $scope.time = "0:00";
-  // $scope.onBreak = () => $scope.onBreak;
+  // $scope.state.onBreak = () => $scope.state.onBreak;
   $scope.tomatoMeter = [
     {class: 'wait', text: "..."},
   ];
@@ -27,6 +32,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
     let activeTom = $scope.tomatoMeter[activeIdx];
     activeTom.class = 'active';
     activeTom.text = completed + 1;
+    state.timerRunning = true;
 
     let intervalFn = function() {
       // assign scope and document title in one go
@@ -43,6 +49,12 @@ app.controller('HomeCtrl', function ($scope, Store) {
     timer = new Timer(time, completeFn, intervalFn);
     document.title = "[" + ($scope.time = "25:00") + "] «  eating a tomato";
   };
+  $scope.togglePause = function () {
+    if(timer) {
+      timer.togglePause();
+      state.timerPaused = !state.timerPaused;
+    }
+  };
 
   $scope._markComplete = function() {
     let activeTom = $scope.tomatoMeter[activeIdx];
@@ -58,14 +70,14 @@ app.controller('HomeCtrl', function ($scope, Store) {
     let activeTom = $scope.tomatoMeter[activeIdx];
     activeTom.text = "#break#";
     activeTom.class = 'break';
-    $scope.onBreak = true;
+    $scope.state.onBreak = true;
   };
   $scope._markBreakComplete = function () {
     let activeTom = $scope.tomatoMeter[activeIdx];
     activeIdx++;
     activeTom.class = "break complete";
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
-    $scope.onBreak = false;
+    $scope.state.onBreak = false;
   };
   $scope._markFailed = function () {
     let activeTom = $scope.tomatoMeter[activeIdx];
@@ -74,4 +86,6 @@ app.controller('HomeCtrl', function ($scope, Store) {
     activeTom.text = 'X';
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
   }
+
+  //tomato button controls
 });

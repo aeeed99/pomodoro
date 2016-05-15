@@ -38,7 +38,7 @@ body {
     background: $c-accent;
     color: white;
   }
-  &:hover {
+  &:hover:not([disabled]) {
     @include shadow(2);
   }
 }
