@@ -100,15 +100,29 @@ app.controller('HomeCtrl', function ($scope, Store) {
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
   };
 
-  let $inputGoal = $('input.goal');
+  let $inputGoal = $('input.goal'),
+    $placeholder = $('#placeholder'),
+    $goalInput = $('#goalInput');
+
   $scope.toggleEdit = () => {
-    state.editing = !state.editing;
-    if(state.editing) {
-      console.log("editeng");
-      setTimeout(() => document.getElementById('goalInput').focus(), 0);
-    } else $scope.$digest();
+    $placeholder.hide();
+    $goalInput.show();
+    setTimeout(() => document.getElementById('goalInput').focus(), 0);
   };
-  $('body').on('blur', $scope.toggleEdit);
+  $goalInput.blur(() => {
+    if(!$scope.goal) {
+      $goalInput.hide();
+      $placeholder.show();
+    }
+  });
+  $('body').on('click', () => {
+    console.log("scope gal", !!$scope.goal, $scope.goal);
+    if(!$scope.goal) {
+      // re put up the placeholder
+      state.editing = false;
+      // $placeholder.show();
+    }
+  });
   $(document).keypress(e => {
     if(e.keyCode === 13 && state.editing) {
       console.log("finish edit");

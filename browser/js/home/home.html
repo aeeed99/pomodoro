@@ -7,8 +7,8 @@
   </div>
   <div class="tom-screen">
     <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
-      <input title="goal" ng-show="state.editing" class="goal" id="goalInput" ng-model="goal" spellcheck="false"/>
-      <div class="goal placeholder" ng-show="!state.editing && goal===''" ng-click="toggleEdit()">Click to add goal</div>
+      <input title="goal" class="goal" id="goalInput" ng-model="goal" spellcheck="false"/>
+      <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
       <div class="time" ng-class="{'finish': state.timerPaused}">{{time}}</div>
       <div class="tom-ctrl">
         <span ng-if="!state.timerRunning">&nbsp;</span>
