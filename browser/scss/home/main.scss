@@ -17,6 +17,8 @@
     display: inline-block;
     width: auto;
     min-width: 200px;
+
+
   }
   .tom-icon {
     @include shadow(1);
@@ -33,6 +35,17 @@
       background: darkolivegreen;
     }
   }
+
+  .button-panel {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      margin: 0 4px;
+    }
+  }
+
   .big-tom-timer {
     @include shadow(2);
     height: 300px;

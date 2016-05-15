@@ -23,7 +23,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
     {class: 'wait', text: "..."},
   ];
 
-  $scope.startTimer = function () {
+  $scope.startTimer = function (time=[25,0]) {
     let activeTom = $scope.tomatoMeter[activeIdx];
     activeTom.class = 'active';
     activeTom.text = completed + 1;
@@ -32,14 +32,18 @@ app.controller('HomeCtrl', function ($scope, Store) {
       // assign scope and document title in one go
       document.title = "[" + ($scope.time = timer.getMins() + ":" + timer.getSecs()) + "] « eating a tomato";
       $scope.$digest();
-      console.log("aue")
+      console.info("interval");
     };
+
     let completeFn = function () {
-      new Notification("Pomodoro complete", { body: "Take a 5 minute break or select other options", icon: "/public/tomato.png"});
+      if(document.hidden) new Notification("Pomodoro complete", { body: "Take a 5 minute break or select other options", icon: "/public/tomato.png"});
+      $scope._markComplete();
+      $scope.$digest();
     };
-    timer = new Timer([0,3], completeFn, intervalFn);
+    timer = new Timer(time, completeFn, intervalFn);
     document.title = "[" + ($scope.time = "25:00") + "] «  eating a tomato";
   };
+
   $scope._markComplete = function() {
     let activeTom = $scope.tomatoMeter[activeIdx];
     activeTom.text = completed + 1;

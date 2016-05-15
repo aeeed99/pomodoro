@@ -1,3 +1,5 @@
+@import "design";
+
 * {
   box-sizing: border-box;
 }
@@ -19,8 +21,66 @@ body {
   margin: 0 auto;
 }
 
+.btn {
+  @include shadow(1);
+  font-weight: bold;
+  border-radius: 2px;
+  -webkit-transition: box-shadow 300ms ease;
+  -moz-transition: box-shadow 300ms ease;
+  -ms-transition: box-shadow 300ms ease;
+  -o-transition: box-shadow 300ms ease;
+  transition: box-shadow 300ms ease;;
+  &.default {
+    background: white;
+    color: $c-accent;
+  }
+  &.primary {
+    background: $c-accent;
+    color: white;
+  }
+  &:hover {
+    @include shadow(2);
+  }
+}
+
+._dev {
+  position: fixed;
+  bottom: 0;
+}
+
+* [negative-color] {
+  display: none !important;
+}
+
+
+// DARK THEME!! simply add the class to body and the stylesheet will take care of the rest
+body.darkTheme {
+  * {
+
+  }
+  background: $th-dark-background;
+  button.default {
+    background: $th-dark-btn-default-background;
+    color: $th-dark-accent;
+  }
+  button.primary, button.btn.login-button {
+    background: $th-dark-accent;
+    color: $th-dark-btn-default-background !important;
+  }
+  .tom-status-bar {
+    background: $th-dark-btn-default-background !important;
+  }
+  *:not(button){
+    color: #781212 !important;
+  }
+
+}
+* [negative-background] {
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+

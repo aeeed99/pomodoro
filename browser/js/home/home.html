@@ -10,11 +10,17 @@
       <span ng-class="">{{time}}</span>
     </div>
   </div>
-  <button type="button" class="btn" ng-click="startTimer()">Start Pomodoro!</button>
-  <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
-  <button type="button" class="btn" ng-click="_markBreakStart()">Start Break</button>
-  <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
-  <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
+  <div class="button-panel">
+    <button type="button" class="btn primary" ng-click="startTimer()">POMODORO (25m)</button>
+    <button type="button" class="btn default" ng-click="_markBreakStart()">BREAK (5m)</button>
+    <button type="button" class="btn default" ng-click="_markBreakStart()">REST (15m)</button>
+  </div>
+  <div class="_dev">
+    <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>
+    <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
+    <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
+    <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
+  </div>
   <div class="side-panel">
     <div class="section">
       <div class="title">Tomatoes eaten</div>

@@ -24,8 +24,9 @@ app.factory('Store', function () {
       {name: "playlist", unlockAt: {tomsToday: 8}, listener: "tomComplete" },
       {name: "goalSettor", unlockAt: {streak: 3}, listener: "tomComplete"},
       {name: "tetris", unlockAt: 44, type: "game", listener: "tomComplete"},
-      {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"}
-    ]
+      {name: "darkTheme", unlockAt: {daysComplete: 30}, unlockFn: () => (new Date()).getHours() > 18, listener: "tomComplete"},
+      {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
+    ],
   };
 
   return Store;
