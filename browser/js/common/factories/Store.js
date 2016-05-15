@@ -18,6 +18,7 @@ app.factory('Store', function () {
       }
     },
     features: [
+      {name: "goalSetter", unlockAt: 1, listener: "tomComplete"},
       {name: "todo", unlockAt: 3, listener: "tomComplete"},
       {name: "markFail", unlockAt: {daysComplete: 2}, listener: "tomComplete" },
       {name: "snake", unlockAt: 8, type: "game", listener: "tomComplete"},

@@ -13,13 +13,17 @@ app.controller('HomeCtrl', function ($scope, Store) {
   $scope.state = {
     timerRunning: false,
     timerPaused: false,
-    onBreak: false
-  }
+    onBreak: false,
+    editing: false
+  };
   let state = $scope.state; // for better readability.
   var timer;
+  let titleCache;
 
   $scope.getCompleted = () => completed;
   $scope.getTotal = Store.profile.tomsEaten.getTotal;
+
+  $scope.goal = "";
 
 
   $scope.time = "0:00";
@@ -50,10 +54,19 @@ app.controller('HomeCtrl', function ($scope, Store) {
     document.title = "[" + ($scope.time = "25:00") + "] «  eating a tomato";
   };
   $scope.togglePause = function () {
-    if(timer) {
-      timer.togglePause();
-      state.timerPaused = !state.timerPaused;
+    if(!timer)  return;
+
+    timer.togglePause();
+    state.timerPaused = !state.timerPaused;
+    if(!titleCache){
+      titleCache = document.title;
+      document.title = "▐▐ " + document.title;
     }
+    else {
+      document.title = titleCache;
+      titleCache = null;
+    }
+
   };
 
   $scope._markComplete = function() {
@@ -85,7 +98,25 @@ app.controller('HomeCtrl', function ($scope, Store) {
     activeTom.class = 'fail';
     activeTom.text = 'X';
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
-  }
+  };
+
+  let $inputGoal = $('input.goal');
+  $scope.toggleEdit = () => {
+    state.editing = !state.editing;
+    if(state.editing) {
+      console.log("editeng");
+      setTimeout(() => document.getElementById('goalInput').focus(), 0);
+    } else $scope.$digest();
+  };
+  $('body').on('blur', $scope.toggleEdit);
+  $(document).keypress(e => {
+    if(e.keyCode === 13 && state.editing) {
+      console.log("finish edit");
+      $inputGoal.blur();
+      $scope.toggleEdit();
+    }
+  });
+
 
   //tomato button controls
 });

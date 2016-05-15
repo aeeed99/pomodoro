@@ -88,9 +88,49 @@
     .finish:not(.no-blink) {
       -webkit-animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
       -o-animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
-      animation: blinker 1.2s cubic-bezier(.42, 0, .58, 1) infinite;
+      animation: blinker 1.2s cubeic-bezier(.42, 0, .58, 1) infinite;
     }
 
+    .time {
+      border-top: 1px solid white;
+      text-align: center;
+      width: 100%;
+    }
+
+    .goal {
+      font-size: 24px;
+      line-height: 52px;
+      border-bottom: 1px solid white;
+      width: 100%;
+      text-align: center;
+      vertical-align: text-top;
+      -webkit-transition: opacity 400ms ease;
+      -moz-transition: opacity 400ms ease;
+      -ms-transition: opacity 400ms ease;
+      -o-transition: opacity 400ms ease;
+      transition: opacity 400ms ease;
+    }
+
+    input.goal {
+      background: transparent;
+      color: white;
+      font-weight: bold;
+      border: 0 none transparent;
+      &:focus {
+        outline-width: 0;
+      }
+    }
+    .goal.placeholder {
+      font-size: 24px;
+      opacity: 0;
+      border-bottom: 1px solid white;
+
+    }
+    &:hover {
+      .goal.placeholder, .tom-ctrl {
+        opacity: 0.5 !important;
+      }
+    }
     .tom-ctrl {
       display: -webkit-flex;
       display: flex;
@@ -105,9 +145,6 @@
       -o-transition: opacity 400ms ease;
       transition: opacity 400ms ease;
 
-      &:hover {
-        opacity: .5;
-      }
       i {
         font-size: 32px;
         margin: 0 4px;
