@@ -7,56 +7,53 @@ var UserModel = mongoose.model('User');
 
 module.exports = function (app) {
 
-    var googleConfig = app.getValue('env').GOOGLE;
+  var googleConfig = app.getValue('env').GOOGLE;
 
-    var googleCredentials = {
-        clientID: googleConfig.clientID,
-        clientSecret: googleConfig.clientSecret,
-        callbackURL: googleConfig.callbackURL
-    };
+  var googleCredentials = {
+    clientID: googleConfig.clientID,
+    clientSecret: googleConfig.clientSecret,
+    callbackURL: googleConfig.callbackURL
+  };
 
-    var verifyCallback = function (accessToken, refreshToken, profile, done) {
-      console.log("SehRR", profile);
+  var verifyCallback = function (accessToken, refreshToken, profile, done) {
+    console.log("SehRR", profile);
 
-        UserModel.findOne({ 'google.id': profile.id }).exec()
-            .then(function (user) {
+    UserModel.findOne({'google.id': profile.id}).exec()
+      .then(function (user) {
 
-                if (user) {
-                    return user;
-                } else {
-                    return UserModel.create({
-                        google: {
-                            id: profile.id
-                        }
-                    });
-                }
+        if (user) {
+          return user;
+        } else {
+          return UserModel.create({
+            name: profile.given_name,
+            google: {
+              id: profile.id
+            }
+          });
+        }
 
-            })
-            .then(function (userToLogin) {
-                done(null, userToLogin);
-            })
-            .catch(function (err) {
-                console.error('Error creating user from Google authentication', err);
-                done(err);
-            });
+      })
+      .then(function (userToLogin) {
+        done(null, userToLogin);
+      })
+      .catch(function (err) {
+        console.error('Error creating user from Google authentication', err);
+        done(err);
+      });
 
-    };
+  };
 
-    passport.use(new GoogleStrategy(googleCredentials, verifyCallback));
+  passport.use(new GoogleStrategy(googleCredentials, verifyCallback));
 
-    app.get('/auth/google', passport.authenticate('google', {
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]
-    }));
+  app.get('/auth/google', passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  }));
 
-    app.get('/auth/google/callback', (res, req, next) => {
-      console.log("hueouoeueo")
-      next();
-    },
-        passport.authenticate('google', { failureRedirect: '/login' }),
-        function (req, res) {
-            res.redirect('/');
-        });
+  app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}),
+    function (req, res, next) {
+      res.redirect('/');
+    });
 
 };

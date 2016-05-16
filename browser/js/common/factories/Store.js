@@ -17,6 +17,7 @@ app.factory('Store', function () {
         }
       }
     },
+    unlockedFeatures: [],
     features: [
       {name: "goalSetter", unlockAt: 1, listener: "tomComplete"},
       {name: "todo", unlockAt: 3, listener: "tomComplete"},

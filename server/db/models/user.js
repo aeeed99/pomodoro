@@ -8,6 +8,7 @@ var schema = new mongoose.Schema({
     type: String
   },
   name: String,
+  // the `profile` also exists on the front-end. All changes on front end shoulde update this on the backend accordingly.
   profile: Object,
   twitter: {
     id: String,
@@ -21,7 +22,7 @@ var schema = new mongoose.Schema({
   google: {
     id: String
   },
-  unlockedFeatures: [],
+  new: { type: Boolean, default: true}
 });
 
 // method to remove sensitive information from user objects before sending them out
