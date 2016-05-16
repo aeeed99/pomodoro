@@ -115,21 +115,12 @@ app.controller('HomeCtrl', function ($scope, Store) {
       $placeholder.show();
     }
   });
-  $('body').on('click', () => {
-    console.log("scope gal", !!$scope.goal, $scope.goal);
-    if(!$scope.goal) {
-      // re put up the placeholder
-      state.editing = false;
-      // $placeholder.show();
-    }
-  });
-  $(document).keypress(e => {
-    if(e.keyCode === 13 && state.editing) {
+  $goalInput.keypress(e => {
+    if(e.keyCode === 13) {
       console.log("finish edit");
       $inputGoal.blur();
-      $scope.toggleEdit();
     }
-  });
+  })
 
 
   //tomato button controls

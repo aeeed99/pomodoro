@@ -16,6 +16,7 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
+      console.log("SehRR", profile);
 
         UserModel.findOne({ 'google.id': profile.id }).exec()
             .then(function (user) {
@@ -45,12 +46,14 @@ module.exports = function (app) {
 
     app.get('/auth/google', passport.authenticate('google', {
         scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
         ]
     }));
 
-    app.get('/auth/google/callback',
+    app.get('/auth/google/callback', (res, req, next) => {
+      console.log("hueouoeueo")
+      next();
+    },
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
             res.redirect('/');
