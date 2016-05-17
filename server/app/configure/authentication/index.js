@@ -48,7 +48,24 @@ module.exports = function (app) {
         if (req.user) {
             res.send({ user: req.user.sanitize() });
         } else {
-            res.status(401).send('No authenticated user.');
+          return UserModel.findOne({_id: req.cookies.id})
+            .then(user => {
+              if(!user) return UserModel.create({
+                  guest: true
+              });
+              return user;
+            })
+            .then(user => {
+              if(!req.cookies.id) res.cookie('id', user._id)
+              res.status(200).send({user: user.sanitize()});
+              console.log("returned user ", user);
+              return user;
+            })
+            .catch(e => console.errer("there was an error at authentication/index:65 ", e));
+
+          // console.log("fond a uoeuheontuhoetnuhon", req.cookies);
+          // if(!req.cookies.id)
+          //   res.status(401).send('No authenticated user.');
         }
     });
 

@@ -48,11 +48,14 @@
         ]);
     });
 
-    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
+    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, Store) {
 
         function onSuccessfulLogin(response) {
             var data = response.data;
             Session.create(data.id, data.user);
+          // add the profile to the store factory, which will continue to update the user data
+          // Store.profile = data.user.profile;
+          console.log(data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
@@ -81,6 +84,7 @@
             // If it returns a user, call onSuccessfulLogin with the response.
             // If it returns a 401 response, we catch it and instead resolve to null.
             return $http.get('/session').then(onSuccessfulLogin).catch(function () {
+              console.log("LETS CREATE A USER HERE");
                 return null;
             });
 

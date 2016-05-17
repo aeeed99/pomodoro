@@ -7,7 +7,7 @@
   </div>
   <div class="tom-screen">
     <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
-      <input title="goal" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
+      <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
       <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
       <div class="time" ng-class="{'finish': state.timerPaused}">{{time}}</div>
       <div class="tom-ctrl">

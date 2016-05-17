@@ -2,11 +2,22 @@ app.config(function ($stateProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'js/home/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeCtrl',
+        resolve: {
+          profile: function ($http) {
+            return $http.get('/session')
+              .then(res => {
+                console.log("got a user", res);
+                return res.data.user.profile;
+              })
+          }
+        }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store) {
+app.controller('HomeCtrl', function ($scope, Store, profile) {
+
+  Store.profile = profile;
 
   let completed = 0;
   let activeIdx = 0;
@@ -20,10 +31,12 @@ app.controller('HomeCtrl', function ($scope, Store) {
   var timer;
   let titleCache;
 
-  $scope.getCompleted = () => completed;
-  $scope.getTotal = Store.profile.tomsEaten.getTotal;
+  let getGoal = () => $scope.goal || "eating a tomato";
 
-  $scope.goal = "";
+  $scope.getCompleted = () => completed;
+  $scope.getTotal = Store.getTotalToms;
+
+  // $scope.goal = "";
 
 
   $scope.time = "0:00";
@@ -40,7 +53,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
 
     let intervalFn = function() {
       // assign scope and document title in one go
-      document.title = "[" + ($scope.time = timer.getMins() + ":" + timer.getSecs()) + "] « eating a tomato";
+      document.title = "[" + ($scope.time = timer.getMins() + ":" + timer.getSecs()) + "] « " + getGoal();
       $scope.$digest();
       console.info("interval");
     };
@@ -51,7 +64,7 @@ app.controller('HomeCtrl', function ($scope, Store) {
       $scope.$digest();
     };
     timer = new Timer(time, completeFn, intervalFn);
-    document.title = "[" + ($scope.time = "25:00") + "] «  eating a tomato";
+    document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
   };
   $scope.togglePause = function () {
     if(!timer)  return;
@@ -75,7 +88,12 @@ app.controller('HomeCtrl', function ($scope, Store) {
     activeTom.class = 'complete';
     completed++;
     activeIdx++;
-    Store.profile.tomsEaten.today++;
+    Store.updateProfile({
+      tomsEaten: {
+        today: Store.profile.tomsEaten.today + 1,
+      }
+    });
+    // Store.profile.tomsEaten.today++;
     $scope.tomatoMeter.push({class: 'wait', text: '...'})
   };
 

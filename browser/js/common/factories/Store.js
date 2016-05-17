@@ -1,23 +1,23 @@
-app.factory('Store', function () {
+app.factory('Store', function ($http) {
 
   //TODO: once users is implimented, the below defaultStore will only be retured if user is not logged in
   // this is the startng user state and will be modifed for as long as session is active. When a user signs up,
   // any progress from here will be passed to the user creation.
 
   let Store = {
-    user: null,
-    profile: {
-      tomsEaten: {
-        today: 0,
-        archive:[
-          //{date: Date, total: 0}
-        ],
-        getTotal: function() {
-          return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
-        }
-      }
-    },
-    unlockedFeatures: [],
+    // user: null,
+    // profile: {
+    //   tomsEaten: {
+    //     today: 0,
+    //     archive:[
+    //       //{date: Date, total: 0}
+    //     ],
+    //     getTotal: function() {
+    //       return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
+    //     }
+    //   }
+    // },
+    // unlockedFeatures: [],
     features: [
       {name: "goalSetter", unlockAt: 1, listener: "tomComplete"},
       {name: "todo", unlockAt: 3, listener: "tomComplete"},
@@ -29,6 +29,20 @@ app.factory('Store', function () {
       {name: "darkTheme", unlockAt: {daysComplete: 30}, unlockFn: () => (new Date()).getHours() > 18, listener: "tomComplete"},
       {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
     ],
+    getTotalToms: function () {
+      return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
+    },
+    updateProfile: function (obj) {
+      let newProfile = Object.assign({}, Store.profile, obj);
+      console.log("new profile to update", newProfile);
+      return $http.get('/session')
+        .then(res => {
+          console.log("got to res", res)
+          return $http.put('/api/user/profile', {newProfile: newProfile, user: res.data.user})
+        })
+        .then(user => console.log("new user data", user))
+        .catch(error => console.error("something went wrong", error));
+    }
   };
 
   return Store;

@@ -9,7 +9,14 @@ var schema = new mongoose.Schema({
   },
   name: String,
   // the `profile` also exists on the front-end. All changes on front end shoulde update this on the backend accordingly.
-  profile: Object,
+  profile: {
+    tomsEaten: {
+      today: {type: Number, default: 0},
+      archive: [],
+    },
+    unlockedFeatures: [],
+  },
+  guest: { type: Boolean, default: false},
   twitter: {
     id: String,
     username: String,
@@ -22,7 +29,7 @@ var schema = new mongoose.Schema({
   google: {
     id: String
   },
-  new: { type: Boolean, default: true}
+  creationDate: {type: Date, default: Date.now }
 });
 
 // method to remove sensitive information from user objects before sending them out
@@ -43,16 +50,16 @@ var encryptPassword = function (plainText, salt) {
   return hash.digest('hex');
 };
 
-schema.pre('save', function (next) {
-
-  if (this.isModified('password')) {
-    this.salt = this.constructor.generateSalt();
-    this.password = this.constructor.encryptPassword(this.password, this.salt);
-  }
-
-  next();
-
-});
+// schema.pre('save', function (next) {
+//
+//   if (this.isModified('password')) {
+//     this.salt = this.constructor.generateSalt();
+//     this.password = this.constructor.encryptPassword(this.password, this.salt);
+//   }
+//
+//   next();
+//
+// });
 
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
