@@ -11,10 +11,12 @@ var schema = new mongoose.Schema({
   // the `profile` also exists on the front-end. All changes on front end shoulde update this on the backend accordingly.
   profile: {
     tomsEaten: {
-      today: {type: Number, default: 0},
+      today: {type: Number, default: 0 },
+      tomatoMeter: [],
       archive: [],
     },
     unlockedFeatures: [],
+    lastLoggedIn: Date,
   },
   guest: { type: Boolean, default: false},
   twitter: {

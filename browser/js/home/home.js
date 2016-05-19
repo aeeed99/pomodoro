@@ -7,20 +7,26 @@ app.config(function ($stateProvider) {
           profile: function ($http) {
             return $http.get('/session')
               .then(res => {
-                console.log("got a user", res);
-                return res.data.user.profile;
+                return Object.assign({}, res.data.user.profile, {status: res.status});
               })
+          },
+          isGuest: function (AuthService) {
+            return AuthService.getLoggedInUser().then(user => user.guest);
           }
         }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile) {
+app.controller('HomeCtrl', function ($scope, Store, profile, isGuest) {
+
+  if(profile.status === 202) {
+    Store.archiveTomsEaten();
+  }
 
   Store.profile = profile;
+  $scope.isGuest = isGuest;
 
-  let completed = 0;
-  let activeIdx = 0;
+  let completed = profile.tomsEaten.today || 0;
   $scope.state = {
     timerRunning: false,
     timerPaused: false,
@@ -41,9 +47,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile) {
 
   $scope.time = "0:00";
   // $scope.state.onBreak = () => $scope.state.onBreak;
-  $scope.tomatoMeter = [
-    {class: 'wait', text: "..."},
-  ];
+  $scope.tomatoMeter = profile.tomsEaten.tomatoMeter.length ? profile.tomsEaten.tomatoMeter : [ {class: 'wait', text: "..."} ];
+  let activeIdx = ($scope.tomatoMeter.length - 1) || 0;
 
   $scope.startTimer = function (time=[25,0]) {
     let activeTom = $scope.tomatoMeter[activeIdx];
@@ -88,13 +93,14 @@ app.controller('HomeCtrl', function ($scope, Store, profile) {
     activeTom.class = 'complete';
     completed++;
     activeIdx++;
+    $scope.tomatoMeter.push({class: 'wait', text: '...'})
     Store.updateProfile({
       tomsEaten: {
         today: Store.profile.tomsEaten.today + 1,
+        tomatoMeter: $scope.tomatoMeter,
       }
     });
     // Store.profile.tomsEaten.today++;
-    $scope.tomatoMeter.push({class: 'wait', text: '...'})
   };
 
   $scope._markBreakStart = function () {
@@ -109,6 +115,11 @@ app.controller('HomeCtrl', function ($scope, Store, profile) {
     activeTom.class = "break complete";
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
     $scope.state.onBreak = false;
+    Store.updateProfile({
+      tomsEaten: {
+        tomatoMeter: $scope.tomatoMeter,
+      }
+    })
   };
   $scope._markFailed = function () {
     let activeTom = $scope.tomatoMeter[activeIdx];
@@ -116,7 +127,13 @@ app.controller('HomeCtrl', function ($scope, Store, profile) {
     activeTom.class = 'fail';
     activeTom.text = 'X';
     $scope.tomatoMeter.push({class: 'wait', text: '...'});
+    Store.updateProfile({
+      tomsEaten: {
+        tomatoMeter: $scope.tomatoMeter,
+      }
+    })
   };
+  $scope.archiveTomsEaten = Store.archiveTomsEaten
 
   let $inputGoal = $('input.goal'),
     $placeholder = $('#placeholder'),

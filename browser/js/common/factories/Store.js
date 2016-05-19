@@ -1,4 +1,4 @@
-app.factory('Store', function ($http) {
+app.factory('Store', function ($http, $log) {
 
   //TODO: once users is implimented, the below defaultStore will only be retured if user is not logged in
   // this is the startng user state and will be modifed for as long as session is active. When a user signs up,
@@ -9,8 +9,9 @@ app.factory('Store', function ($http) {
     // profile: {
     //   tomsEaten: {
     //     today: 0,
+    //     tomatoMeter: []
     //     archive:[
-    //       //{date: Date, total: 0}
+    //       //{date: Date, total: 0, tomatoMeter: {<tomatoMeter>} }
     //     ],
     //     getTotal: function() {
     //       return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
@@ -37,12 +38,25 @@ app.factory('Store', function ($http) {
       console.log("new profile to update", newProfile);
       return $http.get('/session')
         .then(res => {
-          console.log("got to res", res)
           return $http.put('/api/user/profile', {newProfile: newProfile, user: res.data.user})
         })
         .then(user => console.log("new user data", user))
         .catch(error => console.error("something went wrong", error));
-    }
+    },
+    archiveTomsEaten: function () {
+      if (!Store.profile.tomsEaten.today) {
+        $log.info("nothing to archive. User not updated");
+        return;
+      }
+      let tomInfo = {
+        date: new Date(),
+        total: Store.profile.tomsEaten.today,
+        tomatoMeter: Store.profile.tomsEaten.tomatoMeter.filter(t => t.text !== "..."),
+      };
+      Store.profile.tomsEaten.tomatoMeter = [];
+      let newArchive = [tomInfo].concat(Store.profile.tomsEaten.archive);
+      return Store.updateProfile({tomsEaten: {archive: newArchive} });
+    },
   };
 
   return Store;

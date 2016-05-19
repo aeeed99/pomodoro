@@ -51,17 +51,35 @@ module.exports = function (app) {
           return UserModel.findOne({_id: req.cookies.id})
             .then(user => {
               if(!user) return UserModel.create({
-                  guest: true
+                  guest: true,
+                  profile:  {
+                    tomsEaten: {},
+                    unlockedFeatures: [],
+                    lastLoggedIn: new Date(),
+                  },
               });
+
               return user;
             })
             .then(user => {
-              if(!req.cookies.id) res.cookie('id', user._id)
-              res.status(200).send({user: user.sanitize()});
-              console.log("returned user ", user);
-              return user;
+              if(!req.cookies.id) res.cookie('id', user._id.toString());
+
+              let today = new Date();
+              let last = user.profile.lastLoggedIn;
+              let statusCode;
+              if(today.getDate === last.getDate() && today.getMonth() === last.getMonth() && today.getYear() === last.getYear())
+                statusCode = 202;
+              else statusCode = 200;
+
+              res.status(statusCode).send({user: user.sanitize()});
+              console.log("returned user ", user, " with status code ", statusCode);
+              user.profile = Object.assign({}, user.profile, {lastLoggedIn: new Date() });
+              return user.save();
             })
-            .catch(e => console.errer("there was an error at authentication/index:65 ", e));
+            .then(user => {
+              console.log("login time updated", user)
+            })
+            .catch(e => console.error("there was an error at authentication/index:65 ", e));
 
           // console.log("fond a uoeuheontuhoetnuhon", req.cookies);
           // if(!req.cookies.id)
