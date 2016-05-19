@@ -5,6 +5,7 @@ app.factory('Store', function ($http, $log) {
   // any progress from here will be passed to the user creation.
 
   let Store = {
+    //TODO need to find a better way to update the store
     // user: null,
     // profile: {
     //   tomsEaten: {
