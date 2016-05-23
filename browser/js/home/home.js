@@ -4,29 +4,22 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/home/home.html',
         controller: 'HomeCtrl',
         resolve: {
-          profile: function ($http) {
-            return $http.get('/session')
-              .then(res => {
-                return Object.assign({}, res.data.user.profile, {status: res.status});
-              })
+          user: function(AuthService) {
+            return AuthService.getLoggedInUser().then(user => user);
           },
-          isGuest: function (AuthService) {
-            return AuthService.getLoggedInUser().then(user => user.guest);
-          }
         }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile, isGuest) {
+app.controller('HomeCtrl', function ($scope, Store, profile, user, isGuest) {
 
   if(profile.status === 202) {
     Store.archiveTomsEaten();
   }
 
-  Store.profile = profile;
-  $scope.isGuest = isGuest;
+  $scope.isGuest = user.isGuest;
 
-  let completed = profile.tomsEaten.today || 0;
+  let completed = User.tomsEaten.today || 0;
   $scope.state = {
     timerRunning: false,
     timerPaused: false,
@@ -47,7 +40,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, isGuest) {
 
   $scope.time = "0:00";
   // $scope.state.onBreak = () => $scope.state.onBreak;
-  $scope.tomatoMeter = profile.tomsEaten.tomatoMeter.length ? profile.tomsEaten.tomatoMeter : [ {class: 'wait', text: "..."} ];
+  $scope.tomatoMeter = user.tomatoMeter.length ? user.tomatoMeter : [ {class: 'wait', text: "..."} ];
   let activeIdx = ($scope.tomatoMeter.length - 1) || 0;
 
   $scope.startTimer = function (time=[25,0]) {

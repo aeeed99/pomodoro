@@ -3,21 +3,18 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
+
 var schema = new mongoose.Schema({
   email: {
     type: String
   },
+  tomsToday: {type: Number, default: 0},
+  tomatoMeter: {type: Array, default: []},
+  archive: {type: Array, default: []},
+  unlockedFeatures: {type: Array, default: []},
+  lastLoggedIn: {type: Date, default: Date.now},
   name: String,
   // the `profile` also exists on the front-end. All changes on front end shoulde update this on the backend accordingly.
-  profile: {
-    tomsEaten: {
-      today: {type: Number, default: 0 },
-      tomatoMeter: [],
-      archive: [],
-    },
-    unlockedFeatures: [],
-    lastLoggedIn: Date,
-  },
   guest: { type: Boolean, default: false},
   twitter: {
     id: String,
@@ -62,6 +59,7 @@ var encryptPassword = function (plainText, salt) {
 //   next();
 //
 // });
+
 
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;

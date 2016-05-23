@@ -50,22 +50,22 @@ module.exports = function (app) {
         } else {
           return UserModel.findOne({_id: req.cookies.id})
             .then(user => {
-              if(!user) return UserModel.create({
-                  guest: true,
-                  profile:  {
-                    tomsEaten: {},
-                    unlockedFeatures: [],
-                    lastLoggedIn: new Date(),
-                  },
-              });
-
-              return user;
+              if(!user) {
+                return UserModel.create({ guest: true })
+                  .then(user => {
+                    return user
+                  })
+              }
+              else return user;
             })
             .then(user => {
+              console.log("THE USER", user);
               if(!req.cookies.id) res.cookie('id', user._id.toString());
 
+
               let today = new Date();
-              let last = user.profile.lastLoggedIn;
+              let last = user.lastLoggedIn;
+
               let statusCode;
               if(today.getDate === last.getDate() && today.getMonth() === last.getMonth() && today.getYear() === last.getYear())
                 statusCode = 202;
@@ -80,10 +80,6 @@ module.exports = function (app) {
               console.log("login time updated", user)
             })
             .catch(e => console.error("there was an error at authentication/index:65 ", e));
-
-          // console.log("fond a uoeuheontuhoetnuhon", req.cookies);
-          // if(!req.cookies.id)
-          //   res.status(401).send('No authenticated user.');
         }
     });
 

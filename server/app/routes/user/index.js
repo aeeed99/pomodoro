@@ -6,14 +6,11 @@ var User = mongoose.model('User');
 module.exports = router;
 var _ = require('lodash');
 
-router.put('/profile', function (req, res, next) {
+router.put('/', function (req, res, next) {
   console.log("user is", req.body.user);
   return User.findOne({_id: req.body.user._id})
     .then(user => {
-      user.profile = req.body.newProfile;
-      console.log("found user", user);
-      user.markModified('profile');
-      console.log("about to save")
+      Object.assign(user, req.body.newProps)
       return user.save();
     })
     .then(function good(user) {
@@ -25,4 +22,8 @@ router.put('/profile', function (req, res, next) {
         return res.status(500).send(err)
       }
     );
+});
+
+router.put('/user', function(req, res) {
+  res.status(501).send("use PUT /api/user instead");
 });

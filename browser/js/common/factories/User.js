@@ -34,12 +34,10 @@ app.factory('Store', function ($http, $log) {
     getTotalToms: function () {
       return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
     },
-    updateProfile: function (obj) {
-      let newProfile = Object.assign({}, Store.profile, obj);
-      console.log("new profile to update", newProfile);
+    update: function (newProps) {
       return $http.get('/session')
         .then(res => {
-          return $http.put('/api/user/profile', {newProfile: newProfile, user: res.data.user})
+          return $http.put('/api/user/', {newProps: newProps, user: res.data.user})
         })
         .then(user => console.log("new user data", user))
         .catch(error => console.error("something went wrong", error));
