@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile, user) {
+app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
     console.log("the user: ", user);
     console.log("do we have the profile on the store? ", Store.profile);
 
@@ -22,9 +22,12 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user) {
         Store.archiveTomsEaten();
     }
 
+    // assign current stats to pick up where we left off.
     $scope.isGuest = user.isGuest;
-
+    $scope.tomatoMeter = user.tomatoMeter.concat({class: 'wait', text: "..."});
     let completed = user.tomsToday || 0;
+
+    // stuff that has a lifecycle
     $scope.state = {
         timerRunning: false,
         timerPaused: false,
@@ -45,7 +48,6 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user) {
 
     $scope.time = "0:00";
     // $scope.state.onBreak = () => $scope.state.onBreak;
-    $scope.tomatoMeter = user.tomatoMeter.length ? user.tomatoMeter : [{class: 'wait', text: "..."}];
     let activeIdx = ($scope.tomatoMeter.length - 1) || 0;
 
     $scope.startTimer = function (time = [25, 0]) {
@@ -95,18 +97,16 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user) {
 
     $scope._markComplete = function () {
         let activeTom = $scope.tomatoMeter[activeIdx];
-        activeTom.text = completed + 1;
+        // mark the pending tom complete
+        activeTom.text = completed + 1; //for human readble 1-indexing
         activeTom.class = 'complete';
+
         completed++;
         activeIdx++;
         $scope.tomatoMeter.push({class: 'wait', text: '...'})
-        Store.update({
-            tomsEaten: {
-                today: Store.profile.tomsEaten.today + 1,
-                tomatoMeter: $scope.tomatoMeter,
-            }
-        });
 
+        ProfileUpdater.pushTomatoMeter(activeTom)
+            .then(res => console.info("[home.js:markCoplete] user profile updated", res));
         // Store.profile.tomsEaten.today++;
     };
 
