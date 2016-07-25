@@ -14,8 +14,8 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile, user) {
-
+app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
+    ProfileUpdater.pushTomatoMeter("SNEAKING IN THROUGH THE DB");
     console.log("the user: ", user);
     console.log("do we have the profile on the store? ", Store.profile);
 
@@ -97,12 +97,13 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user) {
         completed++;
         activeIdx++;
         $scope.tomatoMeter.push({class: 'wait', text: '...'})
-        Store.updateProfile({
+        Store.update({
             tomsEaten: {
                 today: Store.profile.tomsEaten.today + 1,
                 tomatoMeter: $scope.tomatoMeter,
             }
         });
+
         // Store.profile.tomsEaten.today++;
     };
 

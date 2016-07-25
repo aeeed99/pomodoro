@@ -12,3 +12,5 @@ router.put('/', controller.updateMe);
 router.put('/user', function(req, res) {
   res.status(501).send("use PUT /api/user instead");
 });
+
+router.put('/tomatoMeter', controller.pushTomatoMeter);

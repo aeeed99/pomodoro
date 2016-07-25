@@ -53,10 +53,10 @@
         function onSuccessfulLogin(response) {
             var data = response.data;
             Session.create(data.id, data.user);
-            Store.profile = data;
           // add the profile to the store factory, which will continue to update the user data
           // Store.profile = data.user.profile;
             Store.profile = data.user;
+            Store.user = data.user.id;
           console.log(data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
