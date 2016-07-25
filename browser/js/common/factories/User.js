@@ -1,4 +1,4 @@
-app.factory('Store', function ($http, $log) {
+app.factory('Store', function ($log) {
 
   //TODO: once users is implimented, the below defaultStore will only be retured if user is not logged in
   // this is the startng user state and will be modifed for as long as session is active. When a user signs up,
@@ -6,20 +6,22 @@ app.factory('Store', function ($http, $log) {
 
   let Store = {
     //TODO need to find a better way to update the store
-    // user: null,
-    // profile: {
-    //   tomsEaten: {
-    //     today: 0,
-    //     tomatoMeter: []
-    //     archive:[
-    //       //{date: Date, total: 0, tomatoMeter: {<tomatoMeter>} }
-    //     ],
-    //     getTotal: function() {
-    //       return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
-    //     }
-    //   }
-    // },
-    // unlockedFeatures: [],
+    user: null,
+    profile: {
+      archive: [],
+      tomsEaten: {
+        today: 0,
+        tomatoMeter: [],
+        archive:[
+          //TODO: REMOVE on 8/25
+          //{date: Date, total: 0, tomatoMeter: {<tomatoMeter>} }
+        ],
+        getTotal: function() {
+          return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsToday);
+        }
+      }
+    },
+    unlockedFeatures: [],
     features: [
       {name: "goalSetter", unlockAt: 1, listener: "tomComplete"},
       {name: "todo", unlockAt: 3, listener: "tomComplete"},
@@ -32,7 +34,7 @@ app.factory('Store', function ($http, $log) {
       {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
     ],
     getTotalToms: function () {
-      return Store.profile.tomsEaten.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsEaten.today);
+      return Store.profile.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsToday);
     },
     update: function (newProps) {
       return $http.get('/session')
@@ -43,13 +45,13 @@ app.factory('Store', function ($http, $log) {
         .catch(error => console.error("something went wrong", error));
     },
     archiveTomsEaten: function () {
-      if (!Store.profile.tomsEaten.today) {
+      if (!Store.profile.tomsToday) {
         $log.info("nothing to archive. User not updated");
         return;
       }
       let tomInfo = {
         date: new Date(),
-        total: Store.profile.tomsEaten.today,
+        total: Store.profile.tomsToday,
         tomatoMeter: Store.profile.tomsEaten.tomatoMeter.filter(t => t.text !== "..."),
       };
       Store.profile.tomsEaten.tomatoMeter = [];
@@ -57,6 +59,8 @@ app.factory('Store', function ($http, $log) {
       return Store.updateProfile({tomsEaten: {archive: newArchive} });
     },
   };
+
+  // attach user to the store
 
   return Store;
 

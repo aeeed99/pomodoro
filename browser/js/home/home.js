@@ -7,11 +7,16 @@ app.config(function ($stateProvider) {
           user: function(AuthService) {
             return AuthService.getLoggedInUser().then(user => user);
           },
+          profile: function() {
+            return {status: 100}
+          }
         }
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile, user, isGuest) {
+app.controller('HomeCtrl', function ($scope, Store, profile, user) {
+
+  console.log("the user: ", user);
 
   if(profile.status === 202) {
     Store.archiveTomsEaten();
@@ -19,7 +24,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, isGuest) {
 
   $scope.isGuest = user.isGuest;
 
-  let completed = User.tomsEaten.today || 0;
+  let completed = user.tomsToday || 0;
   $scope.state = {
     timerRunning: false,
     timerPaused: false,

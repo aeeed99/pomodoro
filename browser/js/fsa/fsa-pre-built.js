@@ -24,7 +24,7 @@
         notAuthorized: 'auth-not-authorized'
     });
 
-    app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+    app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, Store) {
         var statusDict = {
             401: AUTH_EVENTS.notAuthenticated,
             403: AUTH_EVENTS.notAuthorized,
@@ -53,8 +53,10 @@
         function onSuccessfulLogin(response) {
             var data = response.data;
             Session.create(data.id, data.user);
+            Store.profile = data;
           // add the profile to the store factory, which will continue to update the user data
           // Store.profile = data.user.profile;
+            Store.profile = data.user.profile;
           console.log(data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
@@ -75,7 +77,7 @@
 
             // Optionally, if true is given as the fromServer parameter,
             // then this cached value will not be used.
-
+            console.log("---- GETTING LOGGED IN USER ---");
             if (this.isAuthenticated() && fromServer !== true) {
                 return $q.when(Session.user);
             }
