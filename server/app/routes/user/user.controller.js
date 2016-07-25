@@ -28,6 +28,13 @@ exports.updateMe = function (req, res, next) {
 
 exports.pushTomatoMeter = function (req, res) {
 
+    let tomato = req.body.tomato,
+        error = null;
+
+    //safety check: tomato is an object with a class and text prop
+    if(!tomato || typeof tomato !== 'object' || !(tomato.hasOwnProperty('class') && tomato.hasOwnProperty('text') ))
+        return res.status(400).send("Cannot update. Request must have a body with object `tomato` containing a `text` and a `key` property");
+
     return User.findOne({_id: req.body.user})
         .then(user => {
             user.tomatoMeter.push(req.body.tomato);
@@ -40,6 +47,10 @@ exports.pushTomatoMeter = function (req, res) {
         })
 }
 
+
+//////// ADMIN ROUTES ////////
+
 exports.clearTomatoMeter = function (req, res) {
     // set tomato meter to empty array,
+    return User.findOne({_})
 }

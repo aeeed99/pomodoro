@@ -14,11 +14,9 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
-    ProfileUpdater.pushTomatoMeter("SNEAKING IN THROUGH THE DB");
+app.controller('HomeCtrl', function ($scope, Store, profile, user) {
     console.log("the user: ", user);
     console.log("do we have the profile on the store? ", Store.profile);
-
 
     if (profile.status === 202) {
         Store.archiveTomsEaten();
@@ -71,6 +69,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             $scope._markComplete();
             $scope.$digest();
         };
+
         timer = new Timer(time, completeFn, intervalFn);
         document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
     };
@@ -89,6 +88,10 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         }
 
     };
+
+
+    //// INTERNAL LOGIC ///
+    // TODO this stuff should be moved off the scope and put into apropriate timeouts.
 
     $scope._markComplete = function () {
         let activeTom = $scope.tomatoMeter[activeIdx];

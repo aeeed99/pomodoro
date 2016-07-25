@@ -1,6 +1,6 @@
 <section id="home">
   <div class="tom-status-bar">
-    <div ng-repeat="tomato in tomatoMeter" ng-class="tomato.class" class="tom-icon badge">
+    <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
       <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
       <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
     </div>
