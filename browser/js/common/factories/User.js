@@ -33,7 +33,8 @@ app.factory('Store', function ($log) {
       {name: "darkTheme", unlockAt: {daysComplete: 30}, unlockFn: () => (new Date()).getHours() > 18, listener: "tomComplete"},
       {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
     ],
-    getTotalToms: function () {
+    getTotalToms: () => {
+          console.log("STORE ", Store);
       return Store.profile.archive.map(t => t.total).reduce((p,n) => p + n, Store.profile.tomsToday);
     },
     update: function (newProps) {
