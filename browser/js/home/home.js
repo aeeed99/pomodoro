@@ -28,9 +28,17 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
                 $scope.$digest();
             })
     };
-    $scope.$on('update-controller', function (event, user) {
-        console.log("[HomeCtrl] `update-controller` triggered", user);
-
+    $scope.$on('update-controller', function (event, newUser, error) {
+        if(error){
+            console.log("an error happened!!!!!", newUser);
+            return;
+        }
+        console.log("[HomeCtrl] `update-controller` triggered", newUser);
+        user = newUser;
+        $scope.tomatoMeter = user.tomatoMeter.concat({class: 'wait', text: "..."});
+        activeIdx = $scope.tomatoMeter.length - 1;
+        completed = user.tomsToday || 0;
+        // $scope.$digest();
         // $scope.updateController();
     });
 
@@ -115,10 +123,10 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
 
         completed++;
         activeIdx++;
-        $scope.tomatoMeter.push({class: 'wait', text: '...'})
+        // $scope.tomatoMeter.push({class: 'wait', text: '...'})
 
-        ProfileUpdater.pushTomatoMeter(activeTom)
-            .then(res => console.info("[home.js:markCoplete] user profile updated", res));
+        ProfileUpdater.pushTomatoMeter(activeTom);
+            // .then(res => console.info("[home.js:markCoplete] user profile updated", res));
         // Store.profile.tomsEaten.today++;
     };
 
