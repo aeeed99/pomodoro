@@ -37,7 +37,11 @@ exports.pushTomatoMeter = function (req, res) {
 
     return User.findOne({_id: req.body.user})
         .then(user => {
-            user.tomatoMeter.push(req.body.tomato);
+            user.tomatoMeter.push(tomato);
+            if(tomato.class === 'complete'){
+                user.tomsToday++;
+                user.markModified('tomsToday');
+            }
             user.markModified('tomatoMeter');
             return user.save();
         })
@@ -50,7 +54,21 @@ exports.pushTomatoMeter = function (req, res) {
 
 //////// ADMIN ROUTES ////////
 
-exports.clearTomatoMeter = function (req, res) {
+exports.deleteTomatoMeter = function (req, res) {
     // set tomato meter to empty array,
-    return User.findOne({_})
+
+    //safety check: is there a user?
+    let userId = req.query.user;
+    if(!userId) return res.status(400).send("Cannot delete. Request needs param with `user` = to user._id");
+
+    return User.findOne({_id: userId })
+        .then(user => {
+            user.tomatoMeter = [];
+            user.tomsToday = 0;
+            user.markModified('tomatoMeter');
+            user.markModified('tomsToday');
+            return user.save();
+        })
+        .then(result => res.status(200).send(result))
+        .then(null, error => res.status(500).send(error));
 }

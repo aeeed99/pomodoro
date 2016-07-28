@@ -16,11 +16,23 @@ app.config(function ($stateProvider) {
 
 app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
     console.log("the user: ", user);
-    console.log("do we have the profile on the store? ", Store.profile);
 
     if (profile.status === 202) {
         Store.archiveTomsEaten();
     }
+
+    $scope.updateController = function () {
+        return AuthService.getLoggedInUser()
+            .then(newUser => {
+                user = newUser;
+                $scope.$digest();
+            })
+    };
+    $scope.$on('update-controller', function (event, user) {
+        console.log("[HomeCtrl] `update-controller` triggered", user);
+
+        // $scope.updateController();
+    });
 
     // assign current stats to pick up where we left off.
     $scope.isGuest = user.isGuest;
@@ -140,7 +152,10 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             }
         })
     };
-    $scope.archiveTomsEaten = Store.archiveTomsEaten
+    $scope.archiveTomsEaten = Store.archiveTomsEaten;
+
+    $scope.deleteTomatoMeter = ProfileUpdater.deleteTomatoMeter;
+
 
     let $inputGoal = $('input.goal'),
         $placeholder = $('#placeholder'),
@@ -162,7 +177,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             console.log("finish edit");
             $inputGoal.blur();
         }
-    })
+    });
 
 
     //tomato button controls

@@ -14,3 +14,5 @@ router.put('/user', function(req, res) {
 });
 
 router.put('/tomatoMeter', controller.pushTomatoMeter);
+
+router.delete('/tomatoMeter', controller.deleteTomatoMeter);
