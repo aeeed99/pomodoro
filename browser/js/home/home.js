@@ -80,7 +80,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             // assign scope and document title in one go
             document.title = "[" + ($scope.time = timer.getMins() + ":" + timer.getSecs()) + "] « " + getGoal();
             $scope.$digest();
-            console.info("interval");
+            //console.info("interval");
         };
 
         let completeFn = function () {

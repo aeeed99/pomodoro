@@ -51,6 +51,11 @@ exports.pushTomatoMeter = function (req, res) {
         })
 }
 
+//POST api/user/tomatoMeter/archive
+
+exports.archiveTomatoMeter = function (req, res) {
+
+}
 
 //////// ADMIN ROUTES ////////
 

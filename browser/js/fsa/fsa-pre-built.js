@@ -57,7 +57,7 @@
           // Store.profile = data.user.profile;
             Store.profile = data.user;
             Store.user = data.user.id;
-          console.log(data);
+          console.log("DATAAA AA AA AA ", response);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
