@@ -54,7 +54,10 @@ exports.pushTomatoMeter = function (req, res) {
 //POST api/user/tomatoMeter/archive
 
 exports.archiveTomatoMeter = function (req, res) {
-
+    if(req.user){
+        return req.user.archiveTomatoMeter()
+            .then(user => res.status(202).send(user))
+    }
 }
 
 //////// ADMIN ROUTES ////////

@@ -42,6 +42,7 @@ userSchema.methods.archiveTomatoMeter = function() {
         tomatoMeter: this.tomatoMeter
     });
     this.tomatoMeter = [];
+    this.tomsToday = 0;
     this.sunDial = Sd();
     return this.save();
 }
