@@ -4,15 +4,30 @@ app.config(function ($stateProvider) {
     templateUrl: 'js/home/home.html',
     controller: 'HomeCtrl',
     resolve: {
-      user: function (AuthService) {
-        console.log("welllll here we are  ")
+      user: function (AuthService, $rootScope) {
         return AuthService.getLoggedInUser()
           .then(user => {
-            console.log("got the first thing bakc")
+            console.log("USER STATUSSSS ", user);
             if (user) return user;
-            return {"nothingg": "nothing"}
+            $rootScope.guestMode = true;
+            var localProfile = localStorage.getItem("profile");
+            if (localProfile) return JSON.parse(localProfile);
+            console.info("no local profile, creating one!");
+
+            var newLocalProfile = {
+              email: "",
+              tomsToday: 0,
+              tomatoMeter: [],
+              sunDial: Sd(),
+              archive: [],
+              unlockedFeatures: [],
+              lastLoggedIn: Date.now(),
+              name: "",
+              guest: true,
+            };
+            localStorage.setItem("profile", JSON.stringify(newLocalProfile));
+            return newLocalProfile;
           })
-          .catch(err => console.log("UUUEEEEEE"))
       },
       profile: function () {
         return {status: 100}
@@ -68,7 +83,9 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
   let getGoal = () => $scope.goal || "eating a tomato";
 
   $scope.getCompleted = () => completed;
-  $scope.getTotal = Store.getTotalToms;
+  $scope.getTotal = function(){
+    return Store.getTotalToms(user);
+  }
 
   // $scope.goal = "";
 

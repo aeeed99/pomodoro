@@ -59,7 +59,8 @@ module.exports = function (app) {
           .then(updatedUser => res.status(202).send(updatedUser))
       }
     } else {
-      return res.status(299).send();
+      console.log("sending 404!");
+      return res.status(404).send();
       // TODO: this here might be for v1
       return UserModel.findOne({_id: req.cookies.id})
         .then(user => {

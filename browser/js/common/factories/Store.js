@@ -38,9 +38,8 @@ app.factory('Store', function ($log) {
             },
             {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
         ],
-        getTotalToms: () => {
-            console.log("STORE ", Store);
-            return Store.profile.archive.map(t => t.total).reduce((p, n) => p + n, Store.profile.tomsToday);
+        getTotalToms: (user) => {
+            return user.archive.map(t => t.total).reduce((p, n) => p + n, user.tomsToday || 0);
         },
         update: function (newProps) {
             return;
