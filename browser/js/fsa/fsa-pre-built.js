@@ -56,8 +56,8 @@
           // add the profile to the store factory, which will continue to update the user data
           // Store.profile = data.user.profile;
             Store.profile = data.user;
-            Store.user = data.user.id;
-          console.log(data);
+            Store.user = data.user && data.user.id;
+            $rootScope.guestMode = false;
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
