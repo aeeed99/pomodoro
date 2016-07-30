@@ -17,4 +17,6 @@ router.put('/tomatoMeter', controller.pushTomatoMeter);
 
 router.post('/tomatoMeter/archive', controller.archiveTomatoMeter)
 
+router.put('/localProfile', controller.mergeLocalProfile);
+
 router.delete('/tomatoMeter', controller.deleteTomatoMeter);

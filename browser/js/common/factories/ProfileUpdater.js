@@ -10,7 +10,7 @@ app.factory('ProfileUpdater', function ($http, Session, $rootScope) {
 
     return $http[method.toLowerCase()](url, body)
       .then(res => $rootScope.$broadcast('update-controller', res.data))
-      .catch(err => $rootScope.$broadcast('update-controller', res.data, true))
+      .catch(err => $rootScope.$broadcast('update-controller', err.data, true))
   };
   let localAction = function (action, payload) {
     console.log("getting a profile from local storage")

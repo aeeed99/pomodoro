@@ -45,7 +45,16 @@ userSchema.methods.archiveTomatoMeter = function() {
     this.tomsToday = 0;
     this.sunDial = Sd();
     return this.save();
-}
+};
+
+userSchema.methods.mergeLocalProfile = function(localProfile){
+
+  for(var k in localProfile) {
+    if(localProfile.hasOwnProperty(k)) this[k] = localProfile[k];
+  }
+  return this.save();
+
+};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
