@@ -6,6 +6,7 @@ app.factory('Store', function ($log) {
 
     let Store = {
         //TODO need to find a better way to update the store
+        newRes: null,
         user: null,
         profile: {
             archive: [],

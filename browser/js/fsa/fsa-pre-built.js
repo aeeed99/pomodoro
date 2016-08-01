@@ -51,10 +51,16 @@
     app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, Store) {
 
         function onSuccessfulLogin(response) {
-            var data = response.data;
+
+            console.log("on sucrrrrresss res : ", response)
+            Store.newRes = response;
+            checkForLocalStorage(response)
+
+            var data = Store.newRes.data;
+            console.log("new dahtaaa ", data);
             Session.create(data.id, data.user);
-          // add the profile to the store factory, which will continue to update the user data
-          // Store.profile = data.user.profile;
+            // add the profile to the store factory, which will continue to update the user data
+            // Store.profile = data.user.profile;
             Store.profile = data.user;
             Store.user = data.user && data.user.id;
             $rootScope.guestMode = false;
@@ -67,6 +73,21 @@
         this.isAuthenticated = function () {
             return !!Session.user;
         };
+        function checkForLocalStorage(responseToPass) {
+            var localProfile = localStorage.getItem('profile');
+            if(localProfile){
+                localProfile = JSON.parse(localProfile);
+                // merge local profile
+                return $http.put('/api/user/localProfile', {localProfile} )
+                    .then(newResponse => {
+                        console.log("THE NEW RESOPOSEEEEE", newResponse);
+                        $rootScope.$broadcast('update-controller', newResponse.data)
+                        localStorage.removeItem('profile');
+                        Store.newRes = newResponse;
+                        return newResponse;
+                    });
+            } else return (Store.newRes = responseToPass)
+        }
 
         this.getLoggedInUser = function (fromServer) {
 
@@ -77,7 +98,6 @@
 
             // Optionally, if true is given as the fromServer parameter,
             // then this cached value will not be used.
-            console.log("---- GETTING LOGGED IN USER ---");
             if (this.isAuthenticated() && fromServer !== true) {
                 return $q.when(Session.user);
             }
@@ -85,8 +105,7 @@
             // Make request GET /session.
             // If it returns a user, call onSuccessfulLogin with the response.
             // If it returns a 401 response, we catch it and instead resolve to null.
-            return $http.get('/session', { loginTime: new Date()}).then(onSuccessfulLogin).catch(function () {
-              console.log("LETS CREATE A USER HERE");
+            return $http.get('/session', {loginTime: new Date()}).then(onSuccessfulLogin).catch(function () {
                 return null;
             });
 
@@ -96,7 +115,7 @@
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
-                    return $q.reject({ message: 'Invalid login credentials.' });
+                    return $q.reject({message: 'Invalid login credentials.'});
                 });
         };
 
