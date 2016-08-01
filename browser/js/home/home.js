@@ -4,11 +4,13 @@ app.config(function ($stateProvider) {
     templateUrl: 'js/home/home.html',
     controller: 'HomeCtrl',
     resolve: {
-      user: function (AuthService, $rootScope) {
+      user: function (AuthService, $rootScope, Store) {
+          console.log("OH HEOY THE SESSION", Store)
         return AuthService.getLoggedInUser()
           .then(user => {
             console.log("USER STATUSSSS ", user);
             if (user) return user;
+              console.log("no user, doing local profile");
             $rootScope.guestMode = true;
             var localProfile = localStorage.getItem("profile");
             if (localProfile) return JSON.parse(localProfile);
@@ -55,7 +57,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
       console.log("an error happened!!!!!", newUser);
       return;
     }
-    console.log("[HomeCtrl] `update-controller` triggered", newUser);
+    console.info("[HomeCtrl] `update-controller` triggered", newUser);
     user = newUser;
     $scope.tomatoMeter = user.tomatoMeter.concat({class: 'wait', text: "..."});
     activeIdx = $scope.tomatoMeter.length - 1;
