@@ -21,7 +21,7 @@ navbar {
 
   a {
     color: black;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .nav > li > a {
@@ -69,4 +69,8 @@ navbar {
     }
   }
 
+}
+
+@media all and (max-width: 765px) {
+  display: none;
 }

@@ -5,7 +5,6 @@ app.config(function ($stateProvider) {
     controller: 'HomeCtrl',
     resolve: {
       user: function (AuthService, $rootScope, Store) {
-          console.log("OH HEOY THE SESSION", Store)
         return AuthService.getLoggedInUser()
           .then(user => {
             console.log("USER STATUSSSS ", user);
@@ -32,7 +31,7 @@ app.config(function ($stateProvider) {
           })
       },
       profile: function () {
-        return {status: 100}
+        return { status: 100 }
       }
     }
   });

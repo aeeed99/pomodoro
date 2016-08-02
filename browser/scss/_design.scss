@@ -14,3 +14,9 @@ $th-dark-accent: #4CAF50;
   @else if $level == 4 {box-shadow: 0 0 14px rgba(0,0,0,0.25), 0 14px 14px rgba(0,0,0,0.22);}
   @else if $level == 5 {box-shadow: 0 0 19px rgba(0,0,0,0.30), 0 0 19px rgba(0,0,0,0.22);}
 }
+
+@mixin mobile(){
+  @media screen and (max-width: 760px) {
+    @content;
+  }
+}
