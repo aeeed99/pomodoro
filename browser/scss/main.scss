@@ -78,6 +78,15 @@ body.darkTheme {
 * [negative-background] {
 }
 
+// GLOBAL STYLES
+.mobile-only {
+  @include desktop {
+    * {
+      display: none;
+    }
+  }
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';

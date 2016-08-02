@@ -4,16 +4,19 @@
       <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
         <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
       </li>
+      <li ng-if="state.current.name === 'login'" ng-click="goBack()" class="mobile-only">
+        <span id="back-arrow">⬅</span>
+      </li>
     </ul>
     <div class="navbar-user">
-      <button ng-show="!user" ui-sref="login" class="btn login-button primary">LOGIN</button>
+      <button ng-show="!user" ng-hide="state.current.name === 'login'" ui-sref="login" class="btn login-button primary">LOGIN</button>
       <div ng-show="user" class="welcome">
         <span>Welcome, {{ user.email }}!</span>
         <a ng-click="logout()">Logout</a>
       </div>
     </div>
   </div>
-  <div class="navbar-nav-mobile-dropdown opened">
+  <div class="navbar-nav-mobile-dropdown">
     <ul>
       <!-- ng-if prevents the current state from being shown in the menu of other states -->
       <li ng-repeat="item in items" ng-if="item.state !== state.current.name" ng-show="!item.auth || isLoggedIn()">

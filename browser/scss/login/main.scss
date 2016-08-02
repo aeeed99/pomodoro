@@ -2,3 +2,24 @@
   width: 60%;
   margin: 0 auto;
 }
+.login-btn {
+  display: block;
+  margin: 32px auto 0;
+  width: 100%;
+  height: 48px;
+  max-width: 480px;
+  &:hover {
+    color: white;
+  }
+}
+.form-group a:hover {
+  text-decoration: none;
+}
+.g-login {
+  background: #F90101;
+  color: white;
+  i {
+    font-size: 20px;
+    padding-right: 8px;
+  }
+}

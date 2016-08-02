@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, $window) {
 
     return {
         restrict: 'E',
@@ -37,12 +37,19 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             };
             setUser();
 
+            scope.goBack = function () {
+                console.log('clicked')
+                $window.history.back();
+            }
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
             var $dropdown = $(".navbar-nav-mobile-dropdown");
+
             scope.toggleMobileDropdown = function () {
+                if($state.current.name === 'login') return;
                 $dropdown.toggleClass('opened');
             };
             var closeDropdown = function () {
