@@ -82,10 +82,14 @@ navbar {
       }
       //// LINKS INSIDE THE MOBILE DROPDOWN
       li {
+        list-style: none;
         .active {
           display: none;
         }
-        margin: 12px 0;
+        padding: 12px 0;
+        a {
+          color: white;
+        }
       }
     }
   }
