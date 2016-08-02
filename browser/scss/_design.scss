@@ -1,6 +1,7 @@
 $c-MainDark: #E53935;
 $c-accent: #00C853;
 $c-greenFade: #d7e5db;
+$c-MainDark-2: #B71C1C;
 
 // dark theme
 $th-dark-background: #212121;
@@ -16,7 +17,13 @@ $th-dark-accent: #4CAF50;
 }
 
 @mixin mobile(){
-  @media screen and (max-width: 760px) {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media screen and (min-width: 768px) {
     @content;
   }
 }

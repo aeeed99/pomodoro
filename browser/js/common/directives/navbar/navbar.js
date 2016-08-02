@@ -12,6 +12,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 { label: 'Documentation', state: 'docs' },
                 { label: 'Members Only', state: 'membersOnly', auth: true }
             ];
+            scope.state = $state;
 
             scope.user = null;
 
@@ -39,6 +40,18 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
+
+            var $dropdown = $(".navbar-nav-mobile-dropdown");
+            scope.toggleMobileDropdown = function () {
+                $dropdown.toggleClass('opened');
+            };
+            var closeDropdown = function () {
+                $dropdown.removeClass('opened');
+            };
+            $rootScope.$on('$stateChangeStart', closeDropdown);
+            $rootScope.$on('$stateChangeSuccess', function () {
+                $('#main').on('click', closeDropdown);
+            })
 
         }
 
