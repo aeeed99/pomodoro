@@ -15,6 +15,9 @@ navbar {
   }
   // the right side of the navbar with menu items
   .navbar-nav {
+    #back-arrow {
+      font-size: 24px;
+    }
     li > a {
       cursor: pointer;
       transition: color 0.2s;
@@ -42,9 +45,9 @@ navbar {
     @include mobile {
       box-sizing: border-box;
       display: inline-block;
-      width: 100%;
-      margin-right: -80px;
-      padding-right: 80px;
+      //margin-right: -80px;
+      overflow-x: hidden;
+      //padding-right: 80px;
       a:not(.active) {
         display: none;
       }
@@ -97,11 +100,13 @@ navbar {
 
   .navbar-user {
     .login-button {
-      @include shadow(3);
+      box-shadow: none;
+      //@include shadow(3);
       float: right;
       border: 0px solid black;
       margin-top: 10px;
-      background: $c-accent;
+      background: transparent;
+      //background: $c-accent;
       font-weight: bold;
       color: white;
       outline: none !important;

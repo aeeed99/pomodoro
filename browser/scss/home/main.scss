@@ -17,8 +17,6 @@
     display: inline-block;
     width: auto;
     min-width: 200px;
-
-
   }
   .tom-icon {
     @include shadow(1);
@@ -50,6 +48,8 @@
     @include shadow(2);
     height: 300px;
     width: 340px;
+    max-width: 76vw;
+    max-height: 40vh;
     margin: 16px auto;
     border-radius: 140px;
     display: -webkit-flex;
