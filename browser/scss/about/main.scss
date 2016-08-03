@@ -1,16 +1,13 @@
 #about {
 
-  margin: 0 auto;
-  width: 90%;
+  height: 100%;
   @include clearfix;
 
   p {
-    width: 40%;
     margin: 0 auto;
     text-align: justify;
-    font-size: 22px;
+    font-size: 14px;
     font-weight: 300;
-    float: left;
   }
 
   .carousel {
@@ -21,18 +18,16 @@
     .carousel-inner {
       height: 500px !important;
     }
-    .carousel-control {
-      background: none;
-    }
-    .carousel-indicators {
-      display: none;
-    }
     img {
       max-width: 100%;
       max-height: 500px;
       display: block;
       margin: 0 auto;
     }
+  }
+  .responsive-btns {
+    color: white;
+    margin: 24px;
   }
 
 }

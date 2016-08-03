@@ -4,6 +4,9 @@
   box-sizing: border-box;
 }
 
+html, #main {
+  height: 90vh;
+}
 body {
   background: #ECEFF1;
 }
@@ -17,8 +20,9 @@ body {
 }
 
 #main {
-  padding-top: 16px;
   margin: 0 auto;
+  position: relative;
+  //z-index: -1;
 }
 
 .btn {
@@ -84,6 +88,23 @@ body.darkTheme {
     * {
       display: none;
     }
+  }
+}
+
+.g-scrolling-text {
+  background: white;
+  @include shadow();
+  margin: 0 auto;
+  display: block;
+  height: auto;
+  width: 100%;
+  padding: 64px 32px 0;
+  min-height: 100%;
+  min-width: 100px;
+  max-width: 760px;
+  @include mobile {
+    margin: 0 !important;
+    width: 100%;
   }
 }
 
