@@ -4,7 +4,7 @@
   @include clearfix;
 
   p {
-    margin: 0 auto;
+    margin: 0 auto 16px;
     text-align: justify;
     font-size: 14px;
     font-weight: 300;
@@ -26,8 +26,14 @@
     }
   }
   .responsive-btns {
-    color: white;
-    margin: 24px;
+    margin: 24px 0 0;
+    a:visited, a:focus, a:active {
+      color: white;
+    }
+    i {
+      color: white;
+      font-size: 20px;
+    }
   }
 
 }
