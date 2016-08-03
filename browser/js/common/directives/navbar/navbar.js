@@ -38,9 +38,8 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             setUser();
 
             scope.goBack = function () {
-                console.log('clicked')
                 $window.history.back();
-            }
+            };
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);

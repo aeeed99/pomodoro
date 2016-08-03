@@ -107,10 +107,13 @@ body.darkTheme {
     width: 100%;
   }
 }
-
+.g-center-text {
+  text-align: center;
+}
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+@import 'learn/main';
 
