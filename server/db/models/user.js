@@ -49,8 +49,10 @@ userSchema.methods.archiveTomatoMeter = function() {
 
 userSchema.methods.mergeLocalProfile = function(localProfile){
 
+  var protectedKeys = ["name", "email"]
+
   for(var k in localProfile) {
-    if(localProfile.hasOwnProperty(k)) this[k] = localProfile[k];
+    if(localProfile.hasOwnProperty(k) && protectedKeys.indexOf(k) === -1) this[k] = localProfile[k];
   }
   return this.save();
 
@@ -68,17 +70,6 @@ var encryptPassword = function (plainText, salt) {
     hash.update(salt);
     return hash.digest('hex');
 };
-
-// userSchema.pre('save', function (next) {
-//
-//   if (this.isModified('password')) {
-//     this.salt = this.constructor.generateSalt();
-//     this.password = this.constructor.encryptPassword(this.password, this.salt);
-//   }
-//
-//   next();
-//
-// });
 
 
 userSchema.statics.generateSalt = generateSalt;
