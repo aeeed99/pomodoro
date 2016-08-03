@@ -1,0 +1,10 @@
+@import "../home/main";
+
+#learn {
+  .tom-status-bar-example {
+    display: block;
+    max-width: 260px;
+    margin: 0 auto 32px;
+    @extend .tom-status-bar;
+  }
+}

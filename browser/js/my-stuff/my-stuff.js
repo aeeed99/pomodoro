@@ -1,13 +1,9 @@
 app.config(function ($stateProvider) {
 
-    $stateProvider.state('membersOnly', {
-        url: '/members-area',
-        template: '<img ng-repeat="item in stash" width="300" ng-src="{{ item }}" />',
-        controller: function ($scope, SecretStash) {
-            SecretStash.getStash().then(function (stash) {
-                $scope.stash = stash;
-            });
-        },
+    $stateProvider.state('myStuff', {
+        url: '/me',
+        templateUrl: '/js/my-stuff/my-stuff.html',
+        controller: 'myStuff',
         // The following data.authenticate is read by an event listener
         // that controls access to this state. Refer to app.js.
         data: {
@@ -16,6 +12,10 @@ app.config(function ($stateProvider) {
     });
 
 });
+
+app.controller('myStuff', function ($scope) {
+    $scope.init = "hello from mystuff!"
+})
 
 app.factory('SecretStash', function ($http) {
 

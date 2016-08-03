@@ -1,16 +1,16 @@
+@import "../home/main";
+
 #about {
 
-  margin: 0 auto;
-  width: 90%;
+
+  height: 100%;
   @include clearfix;
 
   p {
-    width: 40%;
-    margin: 0 auto;
+    margin: 0 auto 16px;
     text-align: justify;
-    font-size: 22px;
+    font-size: 14px;
     font-weight: 300;
-    float: left;
   }
 
   .carousel {
@@ -21,17 +21,21 @@
     .carousel-inner {
       height: 500px !important;
     }
-    .carousel-control {
-      background: none;
-    }
-    .carousel-indicators {
-      display: none;
-    }
     img {
       max-width: 100%;
       max-height: 500px;
       display: block;
       margin: 0 auto;
+    }
+  }
+  .responsive-btns {
+    margin: 24px 0 0;
+    a:visited, a:focus, a:active {
+      color: white;
+    }
+    i {
+      color: white;
+      font-size: 20px;
     }
   }
 
