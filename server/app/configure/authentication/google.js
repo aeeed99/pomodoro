@@ -4,6 +4,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var chalk = require('chalk');
 
 module.exports = function (app) {
 
@@ -35,6 +36,7 @@ module.exports = function (app) {
 
       })
       .then(function (userToLogin) {
+        console.log(chalk.blue("the USER FROM CREATIN"), chalk.red(userToLogin))
         done(null, userToLogin);
       })
       .catch(function (err) {
