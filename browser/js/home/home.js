@@ -56,13 +56,10 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             console.log("an error happened!!!!!", newUser);
             return;
         }
-        console.info("[HomeCtrl] `update-controller` triggered", newUser);
         user = newUser;
         $scope.tomatoMeter = user.tomatoMeter.concat({class: 'wait', text: "..."});
         activeIdx = $scope.tomatoMeter.length - 1;
         completed = user.tomsToday || 0;
-        // $scope.$digest();
-        // $scope.updateController();
     });
 
     // assign current stats to pick up where we left off.
@@ -90,7 +87,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     $scope.getCompleted = () => completed;
     $scope.getTotal = function () {
         return Store.getTotalToms(user);
-    }
+    };
 
     // $scope.goal = "";
 
@@ -100,8 +97,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     let activeIdx = ($scope.tomatoMeter.length - 1) || 0;
     $('body').click(function () {
         activeIdx = ($scope.tomatoMeter.length - 1);
-        console.log("activeIdx set to ", activeIdx);
-    })
+    });
 
     $scope.startTimer = function (time = [25, 0], completeFn, intervalFn) {
         intervalFn = intervalFn || function () {
@@ -110,7 +106,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
                 if (state.state === "BREAK" || state.state === "LONG_BREAK") document.title = "[" + ($scope.time = timer.getMins() + ":" + timer.getSecs()) + "] « BREAK";
                 $scope.$digest();
             };
-        $scope.stopCurrentTimer()
+        $scope.stopCurrentTimer();
         timer = new Timer(time, completeFn, intervalFn);
         if (state.state === "POMODORO") document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
     };
@@ -189,7 +185,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
 
     $scope.stopCurrentTimer = function () {
         if(timer instanceof Timer) {
-            console.log("clearing current timer")
+            console.log("clearing current timer");
             timer.clearTimer();
         }
     };
@@ -249,12 +245,6 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         activeTom.class = 'fail';
         activeTom.text = 'X';
         ProfileUpdater.pushTomatoMeter(activeTom);
-        // $scope.tomatoMeter.push({class: 'wait', text: '...'});
-        // Store.updateProfile({
-        //     tomsEaten: {
-        //         tomatoMeter: $scope.tomatoMeter,
-        //     }
-        // })
     };
 
     $scope.deleteTomatoMeter = ProfileUpdater.deleteTomatoMeter;
@@ -282,7 +272,4 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             $inputGoal.blur();
         }
     });
-
-
-    //tomato button controls
 });
