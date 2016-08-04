@@ -28,12 +28,14 @@
   {{ state.message }}
   </div>
   <div class="button-panel">
-    <button ng-show="state.state === 'OFF'"
+    <button ng-show="state.state !== 'POMODORO' && state.state !== 'null'"
         type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)</button>
     <button ng-show="state.state === 'POMODORO'"
         type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON</button>
-    <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK'"
-        type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)</button>
+    <button ng-show="state.state === 'BREAK' || state.state === 'POST_BREAK'"
+        type="button" class="btn default" ng-click="startLongBreak()">LONG BREAK (15m)</button>
+    <button ng-show="(state.state !== 'POMODORO' || state.state === 'LONG_BREAK') && state.state !== 'null'"
+            type="button" class="btn default" ng-click="_markBreakStart()">END SESSION</button>
   </div>
   <div class="_dev">
     <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>
@@ -45,6 +47,7 @@
     <button type="button" class="btn" ng-click="archiveTomatoMeter()">archive toms eaten controller</button>
   </div>
   Guest mode?? {{guestMode}}
+  <br/>State: {{state.state}}
   <div class="side-panel">
     <div class="section">
       <div class="title">Tomatoes eaten</div>
