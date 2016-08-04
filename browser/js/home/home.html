@@ -1,56 +1,73 @@
 <section id="home">
-  <div class="tom-status-bar">
-    <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
-      <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
-      <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+  <div class="g-scrolling-text">
+    <div class="shallow-padding">
+      <div class="tom-status-bar">
+        <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
+          <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
+          <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+        </div>
+      </div>
+      <div class="records-section">
+        <!--<div class="badge">-->
+          <!--<div class="header">Today</div>-->
+          <!--<div class="body">{{getTotal()}}</div>-->
+        <!--</div>&lt;!&ndash;-->
+      <!--&ndash;&gt;-->
+        <div class="badge">
+          <div class="header">Total</div>
+          <div class="body">{{getTotal()}}</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="tom-screen">
-    <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
-      <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
-      <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
-      <div class="time" ng-class="{'finish': state.timerPaused}">{{time}}</div>
-      <div class="tom-ctrl">
-        <span ng-if="!state.timerRunning">&nbsp;</span>
-        <div ng-show="state.timerRunning">
+    <div class="tom-screen">
+      <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
+        <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
+        <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
+        <div class="time" ng-class="{'finish': state.timerPaused}">{{time}}</div>
+        <div class="tom-ctrl">
+          <span ng-if="!state.timerRunning">&nbsp;</span>
+          <div ng-show="state.timerRunning">
           <span ng-click="togglePause()">
             <i class="fa fa-pause" ng-show="!state.timerPaused"></i>
             <i class="fa fa-play" ng-show="state.timerPaused"></i>
           </span>
-          <span class="reset">
+            <span class="reset">
             <i class="fa fa-refresh"></i>
           </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="message-panel">
-  {{ state.message }}
-  </div>
-  <div class="button-panel">
-    <button ng-show="state.state === 'OFF'"
-        type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)</button>
-    <button ng-show="state.state === 'POMODORO'"
-        type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON</button>
-    <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK'"
-        type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)</button>
-  </div>
-  <div class="_dev">
-    <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>
-    <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
-    <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
-    <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
-    <button type="button" class="btn" ng-click="deleteTomatoMeter()">Delete tomato meter</button>
-    <button type="button" class="btn" ng-click="updateController()">update controller</button>
-    <button type="button" class="btn" ng-click="archiveTomatoMeter()">archive toms eaten controller</button>
-  </div>
-  Guest mode?? {{guestMode}}
-  <div class="side-panel">
-    <div class="section">
-      <div class="title">Tomatoes eaten</div>
-      <div>Today: {{getCompleted()}}</div>
-      <div>Total: {{getTotal()}}</div>
+    <div class="message-panel">
+      {{ state.message }}
     </div>
-
+    <div class="button-panel">
+      <button ng-show="state.state === 'OFF'"
+              type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)
+      </button>
+      <button ng-show="state.state === 'POMODORO'"
+              type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON
+      </button>
+      <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK'"
+              type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)
+      </button>
+    </div>
+    <div class="_dev">
+      <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>
+      <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
+      <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
+      <button type="button" class="btn" ng-click="_markBreakComplete()">Finish break</button>
+      <button type="button" class="btn" ng-click="deleteTomatoMeter()">Delete tomato meter</button>
+      <button type="button" class="btn" ng-click="updateController()">update controller</button>
+      <button type="button" class="btn" ng-click="archiveTomatoMeter()">archive toms eaten controller</button>
+    </div>
+    Guest mode?? {{guestMode}}
+    <div class="side-panel">
+      <div class="section">
+        <div class="title">Tomatoes eaten</div>
+        <div>Today: {{getCompleted()}}</div>
+        <div>Total: {{getTotal()}}</div>
+      </div>
+    </div>
   </div>
 </section>

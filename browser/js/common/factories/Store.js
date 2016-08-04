@@ -40,7 +40,11 @@ app.factory('Store', function ($log) {
             {name: "1000tomsPage", unlockAt: 1000, listener: "tomComplete"},
         ],
         getTotalToms: (user) => {
-            return user.archive.map(t => t.total).reduce((p, n) => p + n, user.tomsToday || 0);
+            return _.sum(user.archive.map(i => i.tomatoMeter.filter(t => t.class === 'complete').length)) + (user.tomsToday || 0);
+            console.log("meter??? ", archiveTotals)
+            return user.archive.reduce((p, tomatoSeries) => tomatoSeries.tomatoMoter.reduce((p, t) => (t.class === 'complete' ? 1:0) + p,0)
+                + p,0)
+                + user.tomsToday || 0;
         },
         update: function (newProps) {
             return;

@@ -99,9 +99,9 @@ body.darkTheme {
   height: auto;
   width: 100%;
   padding: 32px;
-  min-height: 100%;
+  min-height: 90vh;
   min-width: 100px;
-  max-width: 760px;
+  max-width: 1260px;
   @include mobile {
     margin: 0 !important;
     width: 100%;
@@ -110,6 +110,7 @@ body.darkTheme {
 .g-center-text {
   text-align: center;
 }
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';

@@ -1,5 +1,6 @@
+@import "../design";
+
 #home {
-  margin: 32px 0 0 0;
   fullstack-logo {
     padding-top: 30px;
     width: 150px;
@@ -17,6 +18,30 @@
     align-items: center;
     button {
       margin: 0 4px;
+    }
+  }
+  .shallow-padding {
+    @include desktop {
+      padding: 0 150px;
+    }
+  }
+
+  .records-section {
+    float: right;
+    .badge {
+      @include shadow();
+      background: $c-LightYellow;
+      color: black;
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+      .header {
+        font-weight: 200;
+      }
+      .body {
+        font-size: 16px;
+        font-style: italic;
+      }
     }
   }
 
