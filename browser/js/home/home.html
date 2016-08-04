@@ -28,12 +28,12 @@
   {{ state.message }}
   </div>
   <div class="button-panel">
-    <button ng-if="state.state !== 'POMODORO'"
+    <button ng-show="state.state === 'OFF'"
         type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)</button>
-    <button ng-if="state.state"
-
-    <button type="button" class="btn default" ng-click="_markBreakStart()">BREAK (5m)</button>
-    <button type="button" class="btn default" ng-click="_markBreakStart()">REST (15m)</button>
+    <button ng-show="state.state === 'POMODORO'"
+        type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON</button>
+    <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK'"
+        type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)</button>
   </div>
   <div class="_dev">
     <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>

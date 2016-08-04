@@ -113,7 +113,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     };
 
     $scope.startPomodoro = function () {
-        state.state = "POMODORO";
+        state.state = "null";
+        setTimeout(() => state.state = 'POMODORO', 1000);
         state.timerRunning = true;
 
         let activeTom = $scope.tomatoMeter[activeIdx];
