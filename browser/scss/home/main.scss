@@ -1,4 +1,5 @@
 #home {
+  margin: 32px 0 0 0;
   fullstack-logo {
     padding-top: 30px;
     width: 150px;
@@ -131,6 +132,13 @@
       }
     }
   }
+}
+
+.message-panel {
+  //display: none;
+  height: 32px;
+  margin-bottom: 4px;
+  text-align: center;
 }
 .tom-status-bar {
   @include shadow(1);

@@ -10,9 +10,15 @@
     </ul>
     <div class="navbar-user">
       <button ng-show="!user" ng-hide="state.current.name === 'login'" ui-sref="login" class="btn login-button primary">LOGIN</button>
-      <div ng-show="user" class="welcome">
-        <span>Welcome, {{ user.email }}!</span>
-        <a ng-click="logout()">Logout</a>
+      <div ng-show="user" class="logged-in">
+        <div class="text-section">
+          <div class="user-header">Logged in as</div><!--
+        --><div class="user-body">{{ user.name }}</div>
+        </div>
+        <div class="button-section">
+          <button type="button" ng-click="logout()" class="btn"><i class="fa fa-power-off" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
