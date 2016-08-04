@@ -6,12 +6,11 @@ app.directive('splashScreen', function () {
 
             scope.loadingText = "Loading";
             var interval = setInterval(() => {
-                console.log("interval")
                 var append = scope.loadingText + " .";
                 if(append.length > 14) append = "Loading";
                 scope.loadingText = append;
                 scope.$digest();
-            }, 400)
+            }, 400);
 
             setTimeout(() => {
                 clearInterval(interval);
