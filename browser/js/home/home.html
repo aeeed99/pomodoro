@@ -7,6 +7,16 @@
       </div>
     </div>
     <div class="tom-screen">
+      <div class="records-section">
+        <div class="overview-badge">
+          <div class="header">Today</div>
+          <div class="body">{{getTotal()}}</div>
+        </div><!--
+     --><div class="overview-badge">
+          <div class="header">Total</div>
+          <div class="body">{{getTotal()}}</div>
+        </div>
+      </div>
       <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
         <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
         <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
