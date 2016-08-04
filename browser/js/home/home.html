@@ -1,22 +1,25 @@
 <section id="home">
   <div class="g-scrolling-text">
-    <div class="tom-status-bar">
-      <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
-        <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
-        <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+    <div class="shallow-padding">
+      <div class="tom-status-bar">
+        <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
+          <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
+          <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+        </div>
       </div>
-    </div>
-    <div class="tom-screen">
       <div class="records-section">
-        <div class="overview-badge">
+        <div class="badge">
           <div class="header">Today</div>
           <div class="body">{{getTotal()}}</div>
         </div><!--
-     --><div class="overview-badge">
+      -->
+        <div class="badge">
           <div class="header">Total</div>
           <div class="body">{{getTotal()}}</div>
         </div>
       </div>
+    </div>
+    <div class="tom-screen">
       <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
         <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
         <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
@@ -40,11 +43,14 @@
     </div>
     <div class="button-panel">
       <button ng-show="state.state === 'OFF'"
-              type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)</button>
+              type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)
+      </button>
       <button ng-show="state.state === 'POMODORO'"
-              type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON</button>
+              type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON
+      </button>
       <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK'"
-              type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)</button>
+              type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)
+      </button>
     </div>
     <div class="_dev">
       <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>

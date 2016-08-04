@@ -20,33 +20,21 @@
   }
 
   .records-section {
-    width: 200px;
     float: right;
-    >div {
-      width: 60px;
-      height: 60px;
-      padding: 10px;
-      text-align: center;
-      border-radius: 50px;
-    }
-    .records-section {
-      display: inline-block;
-      float: left;
-    }
-    .overview-section {
-      display: inline-block;
-      float: right;
-    }
-    .body {
-      background:$c-LightYellow;
-      width: 36px;
-      height: 36px;
-      margin: -6px auto;
-      font-size: 24px;
-      font-weight: bold;
-      font-style: italic;
-      border-radius: 50px;
+    .badge {
       @include shadow();
+      background: $c-LightYellow;
+      color: black;
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+      .header {
+        font-weight: 200;
+      }
+      .body {
+        font-size: 16px;
+        font-style: italic;
+      }
     }
   }
 
