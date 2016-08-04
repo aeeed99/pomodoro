@@ -5,8 +5,8 @@ navbar {
   position: relative;
   z-index: 5;
   height: 56px !important;
-  background: $c-MainDark;
-  color: white;
+  background: $c-MainDark-3;
+  color: $c-navbarText;
   box-shadow: 1px 1px 14px -3px black;
   .container {
     position: relative;
@@ -23,7 +23,7 @@ navbar {
     li > a {
       cursor: pointer;
       transition: color 0.2s;
-      color: white;
+      color: $c-navbarText;
       margin: 0 8px;
       &.active {
         font-weight: bold;
@@ -82,7 +82,7 @@ navbar {
       padding: 0;
       &.opened {
         overflow-y: auto;
-        height: 128px;
+        height: 152px;
         padding: 12px 0 0;
       }
       //// LINKS INSIDE THE MOBILE DROPDOWN
@@ -93,7 +93,7 @@ navbar {
         }
         padding: 12px 0;
         a {
-          color: white;
+          color: $c-navbarText;
         }
       }
     }
@@ -101,6 +101,39 @@ navbar {
 
 
   .navbar-user {
+    margin: 12px 0 0;
+    .logged-in {
+      display: inline-block;
+      width: 110px;
+      float: right;
+      //LEFT HALF
+      .text-section, .button-section {
+        font-size: 11px;
+        display: inline-block;
+      }
+      .button-section {
+        float: right;
+        margin-top: -4px;
+        display: inline-block;
+        min-width: 1px;
+        button {
+          border-radius: 40px;
+          padding-left: 10px;
+          padding-right: 10px;
+          background: #bbb;
+        }
+      }
+      .text-section {
+        float: left;
+        width: 70px;
+        div {
+          text-align: center;
+          width: auto;
+        }
+      }
+      //RIGHT HALF
+
+    }
     .login-button {
       box-shadow: none;
       //@include shadow(3);
