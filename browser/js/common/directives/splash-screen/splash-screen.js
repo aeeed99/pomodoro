@@ -16,7 +16,7 @@ app.directive('splashScreen', function () {
             setTimeout(() => {
                 clearInterval(interval);
                 ele.remove();
-            },2300);
+            },2000 + (Math.round(Math.random() * 500)));
 
         }
     }
