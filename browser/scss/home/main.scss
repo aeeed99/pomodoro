@@ -1,3 +1,5 @@
+@import "../design";
+
 #home {
   fullstack-logo {
     padding-top: 30px;
@@ -16,6 +18,11 @@
     align-items: center;
     button {
       margin: 0 4px;
+    }
+  }
+  .shallow-padding {
+    @include desktop {
+      padding: 0 150px;
     }
   }
 
