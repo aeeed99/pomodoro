@@ -9,7 +9,10 @@
   height: 100vh;
   background: $c-MainLight;
   #loading-content {
-    margin: 30% 0 0 40%;
+    margin: 64px 0 0 44%;
+    @include mobile {
+      margin: 128px 0 0 40%;
+    }
     font-size: 1.5em;
   }
 }
