@@ -8,7 +8,10 @@ app.config(function ($stateProvider) {
                 return AuthService.getLoggedInUser()
                     .then(user => {
                         console.log("USER STATUSSSS ", user);
-                        if (user) return user;
+                        if (user) {
+                            Store.user = user;
+                            return user;
+                        }
                         console.log("no user, doing local profile");
                         $rootScope.guestMode = true;
                         var localProfile = localStorage.getItem("profile");

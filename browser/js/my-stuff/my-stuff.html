@@ -1,3 +1,16 @@
 <section id="myStuff">
-  <div class="g-scrolling-text">{{init}}</div>
+  <div class="g-scrolling-text">
+    <h3>Past pomodro sessions.</h3>
+    <div class="archive">
+      <div ng-repeat="session in archive track by $index">
+        <h5>{{session.date}}</h5>
+        <div class="tom-status-bar">
+          <div ng-repeat="tomato in session.tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
+            <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
+            <i ng-if="tomato.text === '#break#'" class="fa fa-clock-o"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
