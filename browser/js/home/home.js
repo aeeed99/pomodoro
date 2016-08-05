@@ -82,7 +82,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         breakTimer: null,
     };
     let state = $scope.state; // for better readability.
-    var timer;
+    var timer = {clearTimer: () => null}; // to prevent invoking the function on an undefined on first call;
     let titleCache;
 
     let getGoal = () => $scope.goal || "eating a tomato";
@@ -99,7 +99,11 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     // $scope.state.onBreak = () => $scope.state.onBreak;
     let activeIdx = ($scope.tomatoMeter.length - 1) || 0;
 
-    //noinspection JSAnnotator
+    $scope.startInitial = function (dontStopTimer) {
+        dontStopTimer || timer.clearTimer();
+
+    }
+
     $scope.startTimer = function (time = [25, 0], completeFn, intervalFn) {
         intervalFn = intervalFn || function () {
                 // assign scope and document title in one go
@@ -108,6 +112,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
                 $scope.$digest();
             };
         console.log("INTERVAL FN ",  intervalFn);
+        timer.clearTimer()
         timer = new Timer(time, completeFn, intervalFn);
         if(state.state === "POMODORO") document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
     };
@@ -140,7 +145,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     };
 
     $scope.startBreak = function (time = [5,0]) {
-        state.state = "BREAK";
+        state.state = 'null';
+        setTimeout(() => state.state = 'POMODORO', 1000);
         state.timmerRunning = false;
         state.onBreak = true;
         state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below";
@@ -154,7 +160,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         $scope.startTimer(time, completeFn);
     };
     $scope.postBreak = function (time = [0,10]) {
-        state.state = "POST_BREAK";
+        state.state = 'null';
+        setTimeout(() => state.state = "POST_BREAK",1000);
         let forceBreakFn = function () {
             $scope.startLongBreak([13,30], true);
         };
@@ -231,17 +238,20 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         ProfileUpdater.pushTomatoMeter(activeTom);
     };
     $scope._markFailed = function () {
+        state.state = 'null';
+        state.message = 'Marking failed...'
+        setTimeout(() => {
+            state.state = 'OFF';
+            state.message = "Start a new pomodoro when ready."
+            $scope.$digest();
+        },1000);
+        if(!confirm("Mark pomodoro as failed?")) return;
         let activeTom = $scope.tomatoMeter[activeIdx];
         activeIdx++;
         activeTom.class = 'fail';
         activeTom.text = 'X';
         ProfileUpdater.pushTomatoMeter(activeTom);
-        // $scope.tomatoMeter.push({class: 'wait', text: '...'});
-        // Store.updateProfile({
-        //     tomsEaten: {
-        //         tomatoMeter: $scope.tomatoMeter,
-        //     }
-        // })
+        timer.clearTimer();
     };
 
     $scope.deleteTomatoMeter = ProfileUpdater.deleteTomatoMeter;
@@ -269,7 +279,5 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             $inputGoal.blur();
         }
     });
-
-
     //tomato button controls
 });
