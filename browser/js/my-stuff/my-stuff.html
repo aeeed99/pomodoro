@@ -3,7 +3,7 @@
     <h3>Past pomodro sessions.</h3>
     <div class="archive">
       <div ng-repeat="session in archive track by $index">
-        <h5>{{session.date}}</h5>
+        <h5>{{session.humanDate}}</h5>
         <div class="tom-status-bar">
           <div ng-repeat="tomato in session.tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
             <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>

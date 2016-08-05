@@ -22,10 +22,8 @@ app.config(function ($stateProvider) {
 
 app.controller('myStuff', function ($scope, user) {
     console.log("#####" , user);
-    moment.format();
     $scope.archive = user.archive.slice().reverse();
-    $scope.init = "hello from mystuff!"
-})
+});
 
 app.factory('SecretStash', function ($http) {
 
