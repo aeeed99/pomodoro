@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
 
-    $stateProvider.state('myStuff', {
+    $stateProvider.state('me', {
         url: '/me',
         templateUrl: '/js/my-stuff/my-stuff.html',
         controller: 'myStuff',
@@ -8,14 +8,22 @@ app.config(function ($stateProvider) {
         // that controls access to this state. Refer to app.js.
         data: {
             authenticate: true
+        },
+        resolve: {
+            user: function (Store, AuthService) {
+                if(Store.user) return Store.user;
+                return AuthService.getLoggedInUser()
+                    .then(user => user);
+            }
         }
     });
 
 });
 
-app.controller('myStuff', function ($scope) {
-    $scope.init = "hello from mystuff!"
-})
+app.controller('myStuff', function ($scope, user) {
+    console.log("#####" , user);
+    $scope.archive = user.archive.slice().reverse();
+});
 
 app.factory('SecretStash', function ($http) {
 
