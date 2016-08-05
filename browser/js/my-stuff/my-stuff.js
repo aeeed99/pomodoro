@@ -22,7 +22,8 @@ app.config(function ($stateProvider) {
 
 app.controller('myStuff', function ($scope, user) {
     console.log("#####" , user);
-    $scope.archive = user.archive;
+    moment.format();
+    $scope.archive = user.archive.slice().reverse();
     $scope.init = "hello from mystuff!"
 })
 
