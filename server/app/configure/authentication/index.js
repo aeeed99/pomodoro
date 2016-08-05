@@ -22,7 +22,8 @@ module.exports = function (app) {
     secret: app.getValue('env').SESSION_SECRET,
     store: new MongoStore({mongooseConnection: mongoose.connection}),
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {maxAge: 1470409855938},
   }));
 
   // Initialize passport and also allow it to read
@@ -47,7 +48,7 @@ module.exports = function (app) {
   app.get('/session', function (req, res) {
     var statusCode = 202;
     var todaySunDail = Sd();
-    console.log("user?? ", req.user)
+    console.log("user?? ", req.user);
 
     if (req.user) {
       if (todaySunDail === req.user.sunDial) {
@@ -62,42 +63,6 @@ module.exports = function (app) {
       console.log("sending 404!");
       return res.status(404).send();
       // TODO: this here might be for v1
-      return UserModel.findOne({_id: req.cookies.id})
-        .then(user => {
-          if (!user) {
-            return UserModel.create({guest: true})
-              .then(user => {
-                return user
-              })
-          }
-          else return user;
-        })
-        .then(user => {
-          if (todaySunDail !== user.sunDial) {
-            console.log("new day, archiving the tomato!!")
-            statusCode = 202;
-            return user.archiveTomatoMeter();
-          }
-          else return user;
-        })
-        .then(user => {
-          console.log("THE USER", user);
-          if (!req.cookies.id) res.cookie('id', user._id.toString());
-
-
-          var today = new Date();
-          var last = user.lastLoggedIn;
-
-          console.log("GOING HERE")
-          res.status(100).send({user: user.sanitize()});
-          console.log("returned user ", user, " with status code ", statusCode);
-          user.profile = Object.assign({}, user.profile, {lastLoggedIn: new Date()});
-          return user.save();
-        })
-        .then(user => {
-          console.log("login time updated", user)
-        })
-        .catch(e => console.error("there was an error at authentication/index:65 ", e));
     }
   });
 
