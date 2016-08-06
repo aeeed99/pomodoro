@@ -35,13 +35,14 @@ app.config(function ($stateProvider) {
             },
             profile: function () {
                 return { status: 100 }
-            }
+            },
         }
     });
 });
 
 app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
     console.log("the user: ", user);
+    $scope.production = window.production;
 
     if (profile.status === 202) {
         Store.archiveTomsEaten();
@@ -145,12 +146,12 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         };
         state.message = "Focus time!";
         document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
-        $scope.startTimer([25,0], completeFn, intervalFn)
+        $scope.startTimer([0,5], completeFn, intervalFn)
     };
 
     $scope.startBreak = function (time = [5,0]) {
         state.state = 'null';
-        setTimeout(() => state.state = 'POMODORO', 1000);
+        setTimeout(() => state.state = 'BREAK', 1000);
         state.timmerRunning = false;
         state.onBreak = true;
         state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below";
@@ -246,6 +247,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     $scope._markFailed = function () {
         state.state = 'null';
         state.message = 'Marking failed...'
+        $scope.time = "0:00";
         setTimeout(() => {
             state.state = 'OFF';
             state.message = "Start a new pomodoro when ready."

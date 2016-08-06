@@ -18,7 +18,17 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state, $http) {
 
-    $http.get('/api/production').then(res => console.log("THE RESULT ", res));
+    $http.get('/api/production').then(res => {
+        window.production = res.status === 201;
+        window.ready = true;
+        if(window.production) {
+            var nilFn = function() {};
+            console.log = nilFn;
+            console.info = nilFn;
+            console.warn = nilFn;
+            console.error = nilFn;
+        }
+    });
 
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
