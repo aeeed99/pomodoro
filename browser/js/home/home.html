@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="tom-screen">
-      <div class="big-tom-timer" ng-class="{'break-timer' : state.onBreak }">
+      <div class="big-tom-timer" ng-class="{'break-timer' : state.state === 'BREAK' || state.state === 'LONG_BREAK' }">
         <input title="goal" type="text" class="goal" id="goalInput" ng-model="goal" spellcheck="false" maxlength="24"/>
         <div class="goal placeholder" ng-click="toggleEdit()" id="placeholder">Click to add goal</div>
         <div class="time" ng-class="{'finish': state.timerPaused}">{{time}}</div>
@@ -43,11 +43,12 @@
       <button ng-show="state.state === 'POMODORO'"
               type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON
       </button>
-      <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK' || state.state === 'POST_BREAK'"
+      <button ng-show="state.state === 'BREAK' || state.state === 'POST_BREAK'"
               type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)
       </button>
     </div>
-    <div class="_dev">
+    <div class="_dev" ng-if="!production">
+      {{production}}
       <button type="button" class="btn default" ng-click="startTimer([0,4])">Fast Pomodoro!</button>
       <button type="button" class="btn" ng-click="_markComplete()">Mark complete!</button>
       <button type="button" class="btn" ng-click="_markFailed()">Mark failed</button>
@@ -55,14 +56,14 @@
       <button type="button" class="btn" ng-click="deleteTomatoMeter()">Delete tomato meter</button>
       <button type="button" class="btn" ng-click="updateController()">update controller</button>
       <button type="button" class="btn" ng-click="archiveTomatoMeter()">archive toms eaten controller</button>
-    </div>
-    Guest mode?? {{guestMode}}
-    state: {{state.state}}
-    <div class="side-panel">
-      <div class="section">
-        <div class="title">Tomatoes eaten</div>
-        <div>Today: {{getCompleted()}}</div>
-        <div>Total: {{getTotal()}}</div>
+      Guest mode?? {{guestMode}}
+      state: {{state.state}}
+      <div class="side-panel">
+        <div class="section">
+          <div class="title">Tomatoes eaten</div>
+          <div>Today: {{getCompleted()}}</div>
+          <div>Total: {{getTotal()}}</div>
+        </div>
       </div>
     </div>
   </div>

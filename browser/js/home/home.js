@@ -34,14 +34,15 @@ app.config(function ($stateProvider) {
                     })
             },
             profile: function () {
-                return {status: 100}
-            }
+                return { status: 100 }
+            },
         }
     });
 });
 
 app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdater) {
     console.log("the user: ", user);
+    $scope.production = window.production;
 
     if (profile.status === 202) {
         Store.archiveTomsEaten();
@@ -136,7 +137,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             });
             $scope._markComplete();
             $scope.$digest();
-            return $scope.startBreak([0,5]);
+            return $scope.startBreak([5,0]);
         };
         let intervalFn = function () {
             // assign scope and document title in one go
@@ -144,15 +145,16 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
             $scope.$digest();
         };
         state.message = "Focus time!";
-        $scope.startTimer([0,5], completeFn, intervalFn)
+        document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
+        $scope.startTimer([25,0], completeFn, intervalFn)
     };
 
     $scope.startBreak = function (time = [5,0]) {
         state.state = 'null';
-        setTimeout(() => state.state = 'POMODORO', 1000);
+        setTimeout(() => state.state = 'BREAK', 1000);
         state.timmerRunning = false;
         state.onBreak = true;
-        state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below";
+        state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below.";
         let completeFn = function () {
             if (document.hidden) new Notification("Break over!", {
                 body: "Start another pomodoro, or take a long break.",
@@ -162,7 +164,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         };
         $scope.startTimer(time, completeFn);
     };
-    $scope.postBreak = function (time = [0,10]) {
+    $scope.postBreak = function (time = [1, 30]) {
         state.state = 'null';
         setTimeout(() => state.state = "POST_BREAK",1000);
         let forceBreakFn = function () {
@@ -181,7 +183,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         $scope._markLongBreakStart();
         state.message = forced ? "You've been idle for a while. So we've made this a long break"
             : "Relax for a while, or start another Pomodoro if you're ready.";
-        $scope.startTimer([0,16],function(){
+        $scope.startTimer(time ,function(){
             $scope._markLongBreakComplete();
             $scope.postBreak()
         });
@@ -235,6 +237,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         $scope.state.onBreak = true;
     };
     $scope._markLongBreakComplete = function () {
+        document.title = "Pomodoro!";
+        $scope.time = ":(";
         let activeTom = $scope.tomatoMeter[activeIdx];
         activeIdx++;
         activeTom.class = "break complete";
@@ -243,6 +247,8 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     $scope._markFailed = function () {
         state.state = 'null';
         state.message = 'Marking failed...'
+        document.title = "Pomodoro!";
+        $scope.time = "0:00";
         setTimeout(() => {
             state.state = 'OFF';
             state.message = "Start a new pomodoro when ready."
@@ -283,4 +289,5 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         }
     });
     //tomato button controls
+    setTimeout($scope.$digest);
 });

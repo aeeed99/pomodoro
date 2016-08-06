@@ -46,6 +46,8 @@ module.exports = function (app) {
   // This is used by the browser application (Angular) to determine if a user is
   // logged in already.
   app.get('/session', function (req, res) {
+    console.log("session???", req.session);
+    console.log("cookie???", req.cookies)
     var statusCode = 202;
     var todaySunDail = Sd();
     console.log("user?? ", req.user);

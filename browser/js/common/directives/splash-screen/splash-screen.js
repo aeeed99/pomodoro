@@ -12,8 +12,11 @@ app.directive('splashScreen', function () {
                 scope.$digest();
             }, 400);
 
-            setTimeout(() => {
+            var splashTimer = setInterval(() => {
+                if(!window.ready) return;
+                // delete window.ready;
                 clearInterval(interval);
+                clearInterval(splashTimer);
                 ele.remove();
             },2000 + (Math.round(Math.random() * 500)));
 
