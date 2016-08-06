@@ -127,6 +127,7 @@ gulp.task('build', function () {
     if (process.env.NODE_ENV === 'production') {
         //runSeq(['buildJSProduction', 'buildCSSProduction']);
     } else {
+        console.log("actually building")
         runSeq(['buildJS', 'buildCSS']);
     }
 });
