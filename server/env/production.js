@@ -23,5 +23,6 @@ module.exports = {
         "clientID": process.env.GOOGLE_CLIENT_ID,
         "clientSecret": process.env.GOOGLE_CLIENT_SECRET,
         "callbackURL": process.env.GOOGLE_CALLBACK_URL
-    }
+    },
+    "PRODUCTION": process.env.PRODUCTION || true, // for use on the front end
 };
