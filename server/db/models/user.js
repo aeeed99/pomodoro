@@ -40,11 +40,13 @@ userSchema.methods.sanitize = function () {
 
 userSchema.methods.archiveTomatoMeter = function () {
   var date = Sd.convertSd(this.sunDial);
-  this.archive.push({
-    date: date,
-    humanDate: moment(Date.parse(date)).format("MMM Do YYYY"),
-    tomatoMeter: this.tomatoMeter
-  });
+  console.log("#@#@tomato meter length", this.tomatoMeter.length);
+  if (this.tomatoMeter.length)
+    this.archive.push({
+      date: date,
+      humanDate: moment(Date.parse(date)).format("ddd[,] MMM Do YYYY"),
+      tomatoMeter: this.tomatoMeter
+    });
   this.tomatoMeter = [];
   this.tomsToday = 0;
   this.sunDial = Sd();
@@ -52,12 +54,13 @@ userSchema.methods.archiveTomatoMeter = function () {
 };
 
 userSchema.methods.mergeLocalProfile = function (localProfile) {
-
-  var protectedKeys = ["name", "email"]
+  var protectedKeys = ["name", "email"];
+  if(!this.guest) return this.save();
 
   for (var k in localProfile) {
     if (localProfile.hasOwnProperty(k) && protectedKeys.indexOf(k) === -1) this[k] = localProfile[k];
   }
+  this.guest = false;
   return this.save();
 
 };
