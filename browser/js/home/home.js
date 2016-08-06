@@ -146,7 +146,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         };
         state.message = "Focus time!";
         document.title = "[" + ($scope.time = "25:00") + "] « " + getGoal();
-        $scope.startTimer([0,5], completeFn, intervalFn)
+        $scope.startTimer([25,0], completeFn, intervalFn)
     };
 
     $scope.startBreak = function (time = [5,0]) {
