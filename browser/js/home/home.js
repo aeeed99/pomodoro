@@ -154,7 +154,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         setTimeout(() => state.state = 'BREAK', 1000);
         state.timmerRunning = false;
         state.onBreak = true;
-        state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below";
+        state.message = "You're on a break! You can turn this into a long break or start a new Pomodoro with the buttons below.";
         let completeFn = function () {
             if (document.hidden) new Notification("Break over!", {
                 body: "Start another pomodoro, or take a long break.",
@@ -247,6 +247,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     $scope._markFailed = function () {
         state.state = 'null';
         state.message = 'Marking failed...'
+        document.title = "Pomodoro!";
         $scope.time = "0:00";
         setTimeout(() => {
             state.state = 'OFF';

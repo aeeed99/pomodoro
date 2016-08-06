@@ -15,6 +15,5 @@ module.exports = {
     "clientID": "851799300231-kaajh16pghp8sgni03c5mj2es1s9c9ek.apps.googleusercontent.com",
     "clientSecret": "QYziDdDwlJONm3LCsPsmIy8v",
     "callbackURL": "http://127.0.0.1:1337/auth/google/callback"
-  },
-  "PRODUCTION": true,
+  }
 };

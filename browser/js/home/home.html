@@ -43,7 +43,7 @@
       <button ng-show="state.state === 'POMODORO'"
               type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON
       </button>
-      <button ng-show="state.state === 'BREAK' || state.state === 'LONG_BREAK' || state.state === 'POST_BREAK'"
+      <button ng-show="state.state === 'BREAK' || state.state === 'POST_BREAK'"
               type="button" class="btn default" ng-click="_markBreakStart()">LONG BREAK (15m)
       </button>
     </div>
@@ -58,12 +58,12 @@
       <button type="button" class="btn" ng-click="archiveTomatoMeter()">archive toms eaten controller</button>
       Guest mode?? {{guestMode}}
       state: {{state.state}}
-    </div>
-    <div class="side-panel">
-      <div class="section">
-        <div class="title">Tomatoes eaten</div>
-        <div>Today: {{getCompleted()}}</div>
-        <div>Total: {{getTotal()}}</div>
+      <div class="side-panel">
+        <div class="section">
+          <div class="title">Tomatoes eaten</div>
+          <div>Today: {{getCompleted()}}</div>
+          <div>Total: {{getTotal()}}</div>
+        </div>
       </div>
     </div>
   </div>
