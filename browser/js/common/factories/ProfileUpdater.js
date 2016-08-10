@@ -51,7 +51,6 @@ app.factory('ProfileUpdater', function ($http, Session, $rootScope) {
       return $http.delete('/api/user/tomatoMeter?user=' + Session.user._id);
     },
     archiveTomatoMeter: function () {
-      alert("hit the tomato meter")
       return http('POST', '/api/user/tomatoMeter/archive');
     },
   }

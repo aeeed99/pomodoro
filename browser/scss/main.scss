@@ -110,6 +110,11 @@ body.darkTheme {
 .g-center-text {
   text-align: center;
 }
+.g-center-div {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 @import 'directives/main';
 @import 'home/main';

@@ -1,6 +1,7 @@
 <section id="home">
   <div class="g-scrolling-text">
     <div class="shallow-padding">
+      <div class="tom-status-bar-label">tomat-o-meter</div>
       <div class="tom-status-bar">
         <div ng-repeat="tomato in tomatoMeter track by $index" ng-class="tomato.class" class="tom-icon badge">
           <span ng-if="tomato.text !== '#break#'">{{tomato.text}}</span>
@@ -38,7 +39,7 @@
     </div>
     <div class="button-panel">
       <button ng-show="state.state === 'OFF' || state.state === 'BREAK' || state.state === 'LONG_BREAK' || state.state === 'POST_BREAK'"
-              type="button" class="btn primary" ng-click="startPomodoro()">POMODORO (25m)
+              type="button" class="btn primary" ng-click="startPomodoro()">START POMODORO (25m)
       </button>
       <button ng-show="state.state === 'POMODORO'"
               type="button" class="btn btn-danger" ng-click="_markFailed()">ABANDON

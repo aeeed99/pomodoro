@@ -238,7 +238,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
     };
     $scope._markLongBreakComplete = function () {
         document.title = "Pomodoro!";
-        $scope.time = ":(";
+        $scope.time = "0:00";
         let activeTom = $scope.tomatoMeter[activeIdx];
         activeIdx++;
         activeTom.class = "break complete";
@@ -250,7 +250,7 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         state.message = 'Marking failed...';
         $scope.goal = '';
         document.title = "Pomodoro!";
-        $scope.time = "0:00";
+        $scope.time = ":(";
         setTimeout(() => {
             state.state = 'OFF';
             state.message = "Start a new pomodoro when ready.";

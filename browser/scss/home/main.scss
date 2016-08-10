@@ -26,6 +26,11 @@
     }
   }
 
+  .tom-status-bar-label {
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 16px;
+  }
   .records-section {
     float: right;
     .badge {
@@ -157,10 +162,16 @@
       }
     }
   }
+  .g-scrolling-text {
+    max-width: 1000px;
+  }
 }
 
+/////////////////////////////////////
+//////// NOT NESTED IN #HOME ////////
+/////////////////////////////////////
+
 .message-panel {
-  //display: none;
   min-height: 32px;
   margin-bottom: 4px;
   text-align: center;
