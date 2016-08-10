@@ -245,16 +245,17 @@ app.controller('HomeCtrl', function ($scope, Store, profile, user, ProfileUpdate
         ProfileUpdater.pushTomatoMeter(activeTom);
     };
     $scope._markFailed = function () {
+        if(!confirm("Mark pomodoro as failed?")) return;
         state.state = 'null';
-        state.message = 'Marking failed...'
+        state.message = 'Marking failed...';
+        $scope.goal = '';
         document.title = "Pomodoro!";
         $scope.time = "0:00";
         setTimeout(() => {
             state.state = 'OFF';
-            state.message = "Start a new pomodoro when ready."
+            state.message = "Start a new pomodoro when ready.";
             $scope.$digest();
         },1000);
-        if(!confirm("Mark pomodoro as failed?")) return;
         let activeTom = $scope.tomatoMeter[activeIdx];
         activeIdx++;
         activeTom.class = 'fail';
